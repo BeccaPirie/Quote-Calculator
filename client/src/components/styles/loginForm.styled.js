@@ -20,7 +20,7 @@ form {
     width: 80%;
     margin: auto;
 
-    input {
+    input[type="text"] {
         margin: 10px;
         padding: 8px;
         border: 1px solid #ccc;

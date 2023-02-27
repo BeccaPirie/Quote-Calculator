@@ -12,13 +12,13 @@ z-index: 100;
 align-items: center;
 
 .left {
-    flex: 9;
+    flex: 10;
     align-items: center;
     padding-left: 10px;
 }
 
 .right {
-    flex: 3;
+    flex: 2;
 }
 
 ul {
