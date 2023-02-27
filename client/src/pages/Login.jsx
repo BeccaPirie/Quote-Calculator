@@ -1,4 +1,5 @@
 import{ Link } from 'react-router-dom'
+import { LoginFormStyled } from '../components/styles/loginForm.styled'
 
 export default function Login() {
 
@@ -7,8 +8,8 @@ export default function Login() {
     }
 
     return(
-        <>
-            <h3>Login</h3>
+        <LoginFormStyled>
+            <h2>Login</h2>
 
             <form onSubmit={handleSubmit}>                
                 <input
@@ -29,6 +30,6 @@ export default function Login() {
                 <span>Don't have an account? </span>
                 <Link to={'/register'}><span>Register now</span></Link> 
             </div>        
-        </>
+        </LoginFormStyled>
     )
 }

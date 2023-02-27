@@ -1,3 +1,5 @@
+import { LoginFormStyled } from "../components/styles/loginForm.styled"
+
 export default function Register() {
 
     const handleSubmit = (e) => {
@@ -5,8 +7,8 @@ export default function Register() {
     }
 
     return(
-        <>
-            <h3>Regsiter</h3>
+        <LoginFormStyled>
+            <h2>Regsiter</h2>
 
             <form onSubmit={handleSubmit}>                
                 <input
@@ -32,6 +34,6 @@ export default function Register() {
                 />
                 <button>Register</button>
             </form>     
-        </>
+        </LoginFormStyled>
     )
 }

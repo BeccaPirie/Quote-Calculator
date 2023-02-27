@@ -1,6 +1,11 @@
-// this page should show functionality for preparing quote
+import Navbar from "../components/Navbar"
+import Quote from "../components/Quote"
+
 export default function Home() {
     return(
-        <div>Home page</div>
+        <>
+            <Navbar />
+            <Quote />
+        </>
     )
 }
