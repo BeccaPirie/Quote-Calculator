@@ -1,6 +1,6 @@
 import styled from "styled-components"
 
-export const QuoteListStyled = styled.table`
+export const QuoteTableStyled = styled.table`
 width: 80%;
 margin: 10px auto;
 border-spacing: 0;

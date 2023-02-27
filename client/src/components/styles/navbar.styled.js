@@ -19,26 +19,29 @@ align-items: center;
 
 .right {
     flex: 2;
-}
 
-ul {
-    list-style-type: none;
-    display: flex;
-    padding-left: 0;
+    ul {
+        list-style-type: none;
+        display: flex;
+        padding-left: 0;
+    }
+
+    a li {
+        align-items: center;
+        height: 35px;
+        width: 60px;
+        margin: 10px;
+        line-height: 35px;
+        padding: 0 15px;
+        border-radius: 20px;
+        border: 2px solid #fff;
+        text-align: center;
+    }
 }
 
 a {
-    align-items: center;
-    height: 35px;
-    width: 60px;
-    margin: 10px;
-    line-height: 35px;
-    padding: 0 15px;
-    cursor: pointer;
     text-decoration: none;
+    // cursor: default;
     color: #fff;
-    border-radius: 20px;
-    border: 2px solid #fff;
-    text-align: center;
 }
 `

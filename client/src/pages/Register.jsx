@@ -8,7 +8,7 @@ export default function Register() {
 
     return(
         <LoginFormStyled>
-            <h2>Register</h2>
+            <h2>Sign Up</h2>
 
             <form onSubmit={handleSubmit}>                
                 <input

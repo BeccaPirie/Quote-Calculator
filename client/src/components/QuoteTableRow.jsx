@@ -1,4 +1,4 @@
-export default function QuoteListItem({quote}) {
+export default function QuoteTableRow({quote}) {
     return(
         <tr>
             <td>{quote.name}</td>

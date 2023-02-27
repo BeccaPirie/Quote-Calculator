@@ -1,5 +1,5 @@
-import QuoteListItem from "./QuoteListItem"
-import { QuoteListStyled } from "./styles/quoteList.styled"
+import QuoteTableRow from "./QuoteTableRow"
+import { QuoteTableStyled } from "./styles/quoteTable.styled"
 
 const quotes = [
     {name: "Quote One"},
@@ -9,14 +9,14 @@ const quotes = [
 
 export default function QuoteTable() {
     return(
-        <QuoteListStyled>
+        <QuoteTableStyled>
             <tr>
                 <th>Quote</th>
             </tr>
 
             {quotes.map(quote => {
-                return <QuoteListItem quote={quote} />
+                return <QuoteTableRow quote={quote} />
             })}
-        </QuoteListStyled>
+        </QuoteTableStyled>
     )
 }

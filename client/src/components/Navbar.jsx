@@ -5,7 +5,9 @@ export default function Navbar() {
     return(
         <NavbarStyled>
             <div className="left">
-                <h3>Quotes App</h3>
+                <Link to="/">
+                    <h3>Quotes App</h3>
+                </Link>
             </div>
             
             <div className="right">
