@@ -22,6 +22,10 @@ tr {
         background-color: #eee;
     }
 
+    :nth-child(odd) {
+        background-color: #f7f7f7
+    }
+
     :first-child {
         background-color: #34495e;
     }

@@ -2,34 +2,40 @@ import { ResourceFormStyled } from "./styles/resourceForm.styled"
 export default function PhysicalResource() {
     return(
         <ResourceFormStyled>
+            <label htmlFor="pr_name">Resource:</label>
             <input
             type="text"
-            placeholder="Name of Physical Resource"/>
+            id="pr_name"/>
 
-            <input
-            type="radio"
-            id="one-off"
-            name="payment-type"
-            value="One-off"/>
-            <label for="one-off">One-off</label><br/>
-            <input
-            type="radio"
-            id="weekly-payments"
-            name="payment-type"
-            value="Weekly Payments"/>
-            <label for="weekly-payments">Weekly payments</label><br/>
-            <input
-            type="radio"
-            id="monthly-payments"
-            name="payment-type"
-            value="Monthly Payments"/>
-            <label for="monthly-payments">Monthly Payments</label><br/>
-
+            <div className="radio-group">
+                <legend>Type of Cost:</legend>
+                <input
+                type="radio"
+                id="one-off"
+                name="payment-type"
+                value="One-off"/>
+                <label htmlFor="one-off">One-off</label><br/>
+                <input
+                type="radio"
+                id="weekly-payments"
+                name="payment-type"
+                value="Weekly Payments"/>
+                <label htmlFor="weekly-payments">Weekly payments</label><br/>
+                <input
+                type="radio"
+                id="monthly-payments"
+                name="payment-type"
+                value="Monthly Payments"/>
+                <label htmlFor="monthly-payments">Monthly Payments</label><br/>
+            </div>
+            
+            <label htmlFor="cost">Cost</label>
             <span>£</span>
             <input
             type="number"
-            placeholder="Cost"
+            id="cost"
             />
+            
 
             <button>Add</button>
         </ResourceFormStyled>

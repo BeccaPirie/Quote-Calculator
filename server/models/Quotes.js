@@ -15,6 +15,9 @@ const QuoteSchema = new mongoose.Schema({
         type: Number,
         required: true
     }
+
+    // physical resources
+    // human resources
 })
 
 export default mongoose.model('Quote', QuoteSchema);

@@ -3,6 +3,7 @@ import { ResourceFormStyled } from "./styles/resourceForm.styled";
 export default function HumanResource() {
     return(
         <ResourceFormStyled>
+            <legend>Pay grade:</legend>
             <select>
                 <option value="" selected="selected" disabled>Select pay grade</option>
                 <option value="Junior">Juniors</option>
@@ -10,13 +11,17 @@ export default function HumanResource() {
                 <option value="Senior">Senior</option>
             </select>
 
-            <input
-            type="number"
-            placeholder="Number of workers"/>
 
+            <label htmlFor="workers">Number of workers:</label>
             <input
             type="number"
-            placeholder="Time required"/>
+            id="workers"/>
+
+            <label htmlFor="time">Time required (hours):</label>
+            <input
+            type="number"
+            id="time"/>
+            <span id="hours-span">hours</span>
 
             <button>Add</button>
         </ResourceFormStyled>
