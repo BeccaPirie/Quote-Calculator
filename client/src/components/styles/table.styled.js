@@ -1,23 +1,29 @@
 import styled from "styled-components"
 
-export const QuoteTableStyled = styled.table`
+export const Table = styled.table`
 width: 80%;
 margin: 10px auto;
 border-spacing: 0;
 border-collapse: collapse;
 
-th {
-    text-align: left;
-    color: #eee;
+tr {
+    height: 40px; 
 }
 
 th, td {
     padding-left: 10px;
 }
 
-tr {
-    height: 40px;
+thead tr {
+    background-color: #34495e
+}
 
+thead th {
+    text-align: left;
+    color: #eee;
+} 
+
+tbody tr {
     :nth-child(even) {
         background-color: #eee;
     }
@@ -26,16 +32,9 @@ tr {
         background-color: #f7f7f7
     }
 
-    :first-child {
-        background-color: #34495e;
-    }
-
-    :hover:not(:first-child) {
+    :hover {
         background-color: #ddd;
         cursor: pointer;
     }
 }
-
-
-
 `

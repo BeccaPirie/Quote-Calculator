@@ -1,23 +1,30 @@
-import { QuoteTableStyled } from "./styles/quoteTable.styled";
-export default function ResourceTable() {
+import { Table } from "./styles/table.styled";
+
+export default function ResourceTable({resources}) {
     return(
-        <QuoteTableStyled>
-        <tr>
-            <th>Resources</th>
-            <th></th>
-            <th></th>
-        </tr>
-        
-        <tr>
-            <td>x2 Juniors</td>
-            <td>300 hours</td>
-            <td><button>Remove</button></td>
-        </tr>
-        <tr>
-            <td>Laptops</td>
-            <td>One-off cost of £5000</td>
-            <td><button>Remove</button></td>
-        </tr>
-    </QuoteTableStyled>
+        <Table>
+        <thead>
+            <tr>
+                <th>Resources</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {resources.map((resource, index) => {
+                if(resource.type === "Physical Resource")
+                return <tr key={index}>
+                    <td>{resource.name}</td>
+                    <td>{`${resource.costType} of £${resource.cost}`}</td>
+                    <td><button>Remove</button></td>
+                </tr>
+                else return <tr key={index}>
+                <td>{`x${resource.workers} ${resource.payGrade}s`}</td>
+                <td>{`${resource.time} hours`}</td>
+                <td><button>Remove</button></td>
+            </tr>
+            })}
+        </tbody>
+    </Table>
     )
 }

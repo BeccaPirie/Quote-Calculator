@@ -1,5 +1,5 @@
 import QuoteTableRow from "./QuoteTableRow"
-import { QuoteTableStyled } from "./styles/quoteTable.styled"
+import { Table } from "./styles/table.styled"
 
 const quotes = [
     {name: "Quote One"},
@@ -9,14 +9,17 @@ const quotes = [
 
 export default function QuoteTable() {
     return(
-        <QuoteTableStyled>
-            <tr>
-                <th>Quote</th>
-            </tr>
-
-            {quotes.map(quote => {
-                return <QuoteTableRow quote={quote} />
-            })}
-        </QuoteTableStyled>
+        <Table>
+            <thead>
+                <tr>
+                    <th>Quote</th>
+                </tr>
+            </thead>
+            <tbody>
+                {quotes.map(quote => {
+                    return <QuoteTableRow quote={quote} />
+                })}
+            </tbody>
+        </Table>
     )
 }

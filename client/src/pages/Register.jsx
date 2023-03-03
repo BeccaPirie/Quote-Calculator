@@ -1,4 +1,4 @@
-import { LoginFormStyled } from "../components/styles/loginForm.styled"
+import { LoginForm } from "../components/styles/loginForm.styled"
 
 export default function Register() {
 
@@ -7,7 +7,7 @@ export default function Register() {
     }
 
     return(
-        <LoginFormStyled>
+        <LoginForm>
             <h2>Sign Up</h2>
 
             <form onSubmit={handleSubmit}>                
@@ -34,6 +34,6 @@ export default function Register() {
                 />
                 <button>Register</button>
             </form>     
-        </LoginFormStyled>
+        </LoginForm>
     )
 }
