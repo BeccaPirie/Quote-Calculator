@@ -12,7 +12,7 @@ export default function Quote() {
     return(
         <>
         <Navbar />
-        <ResourceTable />
+        {/* <ResourceTable /> */}
         <h3>Estimated budget: £17,000</h3>
         <Button onClick={saveQuote}>Save Quote</Button>
         </>
