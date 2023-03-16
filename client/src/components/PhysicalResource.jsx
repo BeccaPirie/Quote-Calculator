@@ -1,51 +1,51 @@
+import TextField from '@mui/material/TextField';
+import InputAdornment from '@mui/material/InputAdornment';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+
 export default function PhysicalResource({resource, setResource}) {
     return(
         <>
-            <label htmlFor="pr_name">Resource:</label>
-            <input
-                type="text"
-                id="pr_name"
-                required
-                value={resource.name || ""}
-                onChange={(e) => setResource({...resource, name: e.target.value})}
-            />
-
-            <div className="radio-group"
-                required
-                onChange={(e) => setResource({...resource, costType: e.target.value})}>
-                <legend>Type of Cost:</legend>
-                <input
-                    type="radio"
-                    id="one-off-payment"
-                    name="payment-type"
-                    value="One-off Payment"
+            <div>
+                <TextField
+                    id="pr_name"
+                    label="Resource"
+                    margin="normal"
+                    value={resource.name || ""}
+                    onChange={(e) => setResource({...resource, name: e.target.value})}
                 />
-                <label htmlFor="one-off-payment">One-off Payment</label><br/>
-                <input
-                    type="radio"
-                    id="weekly-payments"
-                    name="payment-type"
-                    value="Weekly Payments"
-                />
-                <label htmlFor="weekly-payments">Weekly Payments</label><br/>
-                <input
-                    type="radio"
-                    id="monthly-payments"
-                    name="payment-type"
-                    value="Monthly Payments"
-                />
-                <label htmlFor="monthly-payments">Monthly Payments</label><br/>
             </div>
-            
-            <label htmlFor="cost">Cost</label>
-            <span>£</span>
-            <input
-                type="number"
-                id="cost"
-                required
-                value= {resource.cost || ""}
-                onChange={(e) => setResource({...resource, cost: e.target.value})}
-            />
+
+            <FormControl>
+                <FormLabel id="radio-group">Type of Cost</FormLabel>
+                <RadioGroup
+                    aria-labelledby="radio-group"
+                    name="type-of-cost"
+                    value={resource.costType}
+                    onChange={(e) => setResource({...resource, costType: e.target.value})}
+                >
+                    <FormControlLabel value="One-off Payment" control={<Radio />} label="One-off Payment" />
+                    <FormControlLabel value="Weekly Payments" control={<Radio />} label="Weekly Payments" />
+                    <FormControlLabel value="Monthly Payments" control={<Radio />} label="Monthly Payments" />
+                </RadioGroup>
+            </FormControl>
+
+            <div>
+                <TextField
+                    id="cost"
+                    label="Cost"
+                    inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+                    margin="normal"
+                    InputProps={{
+                        startAdornment:<InputAdornment position="start">£</InputAdornment>
+                    }}
+                    value={resource.cost || ""}
+                    onChange={(e) => setResource({...resource, cost: e.target.value})}
+                />
+            </div>
         </>
     )
 }

@@ -4,6 +4,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
+import InputAdornment from '@mui/material/InputAdornment';
 
 export default function HumanResource({resource, setResource}) {
     const payGrades = [
@@ -14,17 +15,6 @@ export default function HumanResource({resource, setResource}) {
 
     return(
         <>
-            {/* <legend>Pay grade:</legend>
-            <select
-                defaultValue="default"
-                required
-                onChange={(e) => setResource({...resource, payGrade: e.target.value})}>
-                <option value="default" disabled>Select pay grade</option>
-                {payGrades.map(payGrade => {
-                    return <option value={payGrade.type}>{payGrade.type}</option>
-                })}
-            </select> */}
-
             <Box sx={{ minWidth: 120 }}>
                 <FormControl>
                     <InputLabel id="pay-grade-label">Pay grade</InputLabel>
@@ -43,15 +33,6 @@ export default function HumanResource({resource, setResource}) {
                 </FormControl>
             </Box>
 
-            {/* <label htmlFor="workers">Number of workers:</label>
-            <input
-                type="number"
-                id="workers"
-                required
-                value={resource.workers || ""}
-                onChange={(e) => setResource({...resource, workers: e.target.value})}
-            /> */}
-
             <div>
                 <TextField
                     id="no-of-workers"
@@ -63,25 +44,18 @@ export default function HumanResource({resource, setResource}) {
                 />
             </div>
 
-            {/* <label htmlFor="time">Time required (hours):</label>
-            <input
-                type="number"
-                id="time"
-                required
-                value={resource.time || ""}
-                onChange={(e) => setResource({...resource, time: e.target.value})}
-            /> */}
-
             <div>
                 <TextField
                     id="time"
-                    label="Time required (hours)"
+                    label="Time required"
                     inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
                     margin="normal"
+                    InputProps={{
+                        endAdornment:<InputAdornment position="end">hours</InputAdornment>
+                    }}
                     value={resource.time || ""}
                     onChange={(e) => setResource({...resource, time: e.target.value})}
                 />
-                <span id="hours-span">hours</span>
             </div>
         </>
     )

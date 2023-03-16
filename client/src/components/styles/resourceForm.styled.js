@@ -9,7 +9,7 @@ display: block;
 
 .resource-type {
     background-color: #ddd;
-    padding: 5px 20px 10px 20px;
+    padding: 15px 20px;
 
     legend {
         margin-top: 0;
@@ -18,7 +18,11 @@ display: block;
 
 .resource-form {
     padding: 20px;
-    height: 25vh;
+    height: 40vh;
+}
+
+#resource-type-select, #pay-grade-select {
+    width: 150px;
 }
 
 // input,  {
@@ -58,9 +62,9 @@ display: block;
 //     background-color: #f4f4f4;
 // }
 
-#hours-span {
-    margin-left: 5px;
-}
+// #hours-span {
+//     margin-left: 5px;
+// }
 
 button[type="submit"] {
     float: right;

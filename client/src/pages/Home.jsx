@@ -7,6 +7,11 @@ import ResourceTable from "../components/ResourceTable"
 import { Link } from "react-router-dom"
 import { Button } from "../components/styles/button.styled"
 import { Container } from "../components/styles/container.styled"
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 export default function Home() {
     const [newResource, setNewResource] = useState({})
@@ -17,9 +22,9 @@ export default function Home() {
     // functioned called on form submit
     const onSubmit = (e) => {
         e.preventDefault()
-        
         // add object to resources array
         setResources(resources => [...resources, newResource])
+        setNewResource({type:newResource.type})
     }
 
     return(
@@ -29,17 +34,23 @@ export default function Home() {
                 <h3>Fill in the form below to add a resource to your quote</h3>
 
                 <ResourceForm onSubmit={(e) => onSubmit(e)}>
-                    <div className="resource-type">
-                        <legend>Type of Resource:</legend>
-                        <select
-                            defaultValue="default"
-                            onChange={(e) => setNewResource({...newResource, type:e.target.value})}>
-                            <option value="default" disabled>Select Resource Type</option>
-                            {resourceTypes.map(resourceType => {
-                                return <option value={resourceType}>{resourceType}</option>
-                            })}
-                        </select>
-                    </div>
+                    <Box className="resource-type">
+                        <FormControl>
+                            <InputLabel id="resource-type-label">Resource Type</InputLabel>
+                            <Select
+                                labelId="resource-type-label"
+                                id="resource-type-select"
+                                value={newResource.type || ''}
+                                label="Resource Type"
+                                margin="normal"
+                                onChange={(e) => setNewResource({...newResource, type: e.target.value})}
+                            >
+                                {resourceTypes.map(type => {
+                                    return <MenuItem value={type}>{type}</MenuItem>
+                                })}
+                            </Select>
+                        </FormControl>
+                    </Box>
 
                     <div className="resource-form">
                         {newResource.type === resourceTypes[0] && <PhysicalResource resource={newResource} setResource={setNewResource}/>}
@@ -47,7 +58,11 @@ export default function Home() {
                     </div>
 
                     {newResource.type !== "" && 
-                        <Button type="submit">Add</Button>}  
+                    <>
+                        {/* <Button>Add to subtask</Button> */}
+                        <Button type="submit">Add</Button>
+                    </>
+                        }  
                 </ResourceForm>
 
                 {resources.length > 0 && <ResourceTable resources={resources}/>}
