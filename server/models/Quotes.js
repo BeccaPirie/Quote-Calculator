@@ -1,3 +1,6 @@
+import PhysicalResourceSchema from './PhysicalResource';
+import HumanResourceSchema from './HumanResource'
+
 const mongoose = require('mongoose');
 
 const QuoteSchema = new mongoose.Schema({
@@ -14,10 +17,20 @@ const QuoteSchema = new mongoose.Schema({
     quote: {
         type: Number,
         required: true
-    }
+    },
 
-    // physical resources
-    // human resources
+    physicalResources: {
+        type: [PhysicalResourceSchema],
+    },
+    
+    humanResources: {
+        type: [HumanResourceSchema],
+        min: 1
+    },
+
+    mainTaskId: {
+        type: String
+    }
 })
 
 export default mongoose.model('Quote', QuoteSchema);
