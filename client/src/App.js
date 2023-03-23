@@ -4,8 +4,12 @@ import Login from './pages/Login'
 import Register from './pages/Register';
 import Profile from './pages/Profile';
 import Quote from './pages/Quote';
+import { useContext } from 'react';
+import { UserContext } from './context/user/UserContext';
 
 function App() {
+  const { user } = useContext(UserContext)
+
   return (
     <BrowserRouter>
       <Routes>

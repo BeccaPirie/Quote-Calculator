@@ -25,6 +25,8 @@ export default function Navbar() {
                     {/* <Link to="/profile">
                         <li>Profile</li>
                     </Link> */}
+
+                    {/* if admin */}
                 </ul>
                 
             </div>

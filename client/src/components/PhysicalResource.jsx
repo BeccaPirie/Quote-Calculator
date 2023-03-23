@@ -7,6 +7,7 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 
 export default function PhysicalResource({resource, setResource}) {
+
     return(
         <>
             <div>
@@ -14,12 +15,13 @@ export default function PhysicalResource({resource, setResource}) {
                     id="pr_name"
                     label="Resource"
                     margin="normal"
+                    required
                     value={resource.name || ""}
                     onChange={(e) => setResource({...resource, name: e.target.value})}
                 />
             </div>
 
-            <FormControl>
+            <FormControl required>
                 <FormLabel id="radio-group">Type of Cost</FormLabel>
                 <RadioGroup
                     aria-labelledby="radio-group"
@@ -39,6 +41,7 @@ export default function PhysicalResource({resource, setResource}) {
                     label="Cost"
                     inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
                     margin="normal"
+                    required
                     InputProps={{
                         startAdornment:<InputAdornment position="start">£</InputAdornment>
                     }}

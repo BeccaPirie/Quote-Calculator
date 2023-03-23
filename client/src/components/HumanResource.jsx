@@ -5,18 +5,19 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
+import { useState } from 'react'
 
-export default function HumanResource({resource, setResource}) {
-    const payGrades = [
+const payGrades = [
         {type: "Junior", salary: 20000},
         {type: "Standard", salary: 40000},
         {type: "Senior", salary: 60000}
     ]
 
+export default function HumanResource({resource, setResource}) {
     return(
         <>
             <Box sx={{ minWidth: 120 }}>
-                <FormControl>
+                <FormControl required>
                     <InputLabel id="pay-grade-label">Pay grade</InputLabel>
                     <Select
                         labelId="pay-grade-label"
@@ -39,6 +40,7 @@ export default function HumanResource({resource, setResource}) {
                     label="Number of workers"
                     inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
                     margin="normal"
+                    required
                     value={resource.workers || ""}
                     onChange={(e) => setResource({...resource, workers: e.target.value})}
                 />
@@ -50,6 +52,7 @@ export default function HumanResource({resource, setResource}) {
                     label="Time required"
                     inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
                     margin="normal"
+                    required
                     InputProps={{
                         endAdornment:<InputAdornment position="end">hours</InputAdornment>
                     }}

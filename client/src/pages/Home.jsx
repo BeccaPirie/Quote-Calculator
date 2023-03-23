@@ -12,10 +12,14 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import { useContext } from 'react';
+import { UserContext } from '../context/user/UserContext';
 
 export default function Home() {
     const [newResource, setNewResource] = useState({})
     const [resources, setResources] = useState([])
+    const { user } = useContext(UserContext)
+    console.log(user)
 
     const resourceTypes = ["Physical Resource", "Human Resource"]
 
