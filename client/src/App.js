@@ -3,7 +3,7 @@ import Home from './pages/Home'
 import Login from './pages/Login'
 import Register from './pages/Register';
 import Profile from './pages/Profile';
-import Quote from './pages/Quote';
+import Admin from './pages/Admin';
 import { useContext } from 'react';
 import { UserContext } from './context/user/UserContext';
 
@@ -16,8 +16,8 @@ function App() {
         <Route path='/' element={<Home />}></Route>
         <Route path='/login' element={<Login />}></Route>
         <Route path='/register' element={<Register />}></Route>
-        <Route path='/quote' element={<Quote />}></Route>
         <Route path='/profile' element={<Profile />}></Route>
+        <Route path='/admin' element={<Admin />}></Route>
       </Routes>
     </BrowserRouter>
   );

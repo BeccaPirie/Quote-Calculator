@@ -1,5 +1,4 @@
-import Navbar from "../components/Navbar";
-import ResourceTable from "../components/ResourceTable";
+import ResourceTable from "./ResourceTable";
 // import { Button } from "../components/styles/button.styled";
 import { useContext, useState } from 'react';
 import { UserContext } from '../context/user/UserContext';
@@ -48,12 +47,12 @@ export default function Quote() {
     const saveQuote = () => {
         // save quote
         // navigate to profile
+        setLoginDialog(false)
         setShowDialog(true)
     }
 
     return(
         <>
-            <Navbar />
             {/* <ResourceTable /> */}
             <h3>Estimated budget: £17,000</h3>
             <Button onClick={saveQuoteClick}>Save Quote</Button>

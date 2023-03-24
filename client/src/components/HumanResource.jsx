@@ -24,7 +24,6 @@ export default function HumanResource({resource, setResource}) {
                         id="pay-grade-select"
                         value={resource.payGrade || ''}
                         label="Pay Grade"
-                        margin="normal"
                         onChange={(e) => setResource({...resource, payGrade: e.target.value})}
                     >
                         {payGrades.map(payGrade => {
@@ -39,7 +38,6 @@ export default function HumanResource({resource, setResource}) {
                     id="no-of-workers"
                     label="Number of workers"
                     inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
-                    margin="normal"
                     required
                     value={resource.workers || ""}
                     onChange={(e) => setResource({...resource, workers: e.target.value})}
@@ -51,7 +49,6 @@ export default function HumanResource({resource, setResource}) {
                     id="time"
                     label="Time required"
                     inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
-                    margin="normal"
                     required
                     InputProps={{
                         endAdornment:<InputAdornment position="end">hours</InputAdornment>

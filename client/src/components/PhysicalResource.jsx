@@ -40,7 +40,6 @@ export default function PhysicalResource({resource, setResource}) {
                     id="cost"
                     label="Cost"
                     inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
-                    margin="normal"
                     required
                     InputProps={{
                         startAdornment:<InputAdornment position="start">£</InputAdornment>
