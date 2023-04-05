@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const PayGradeSchema = new mongoose.Schema({
+const PaygradeSchema = new mongoose.Schema({
     type: {
         type: String,
         required: true
@@ -12,4 +12,4 @@ const PayGradeSchema = new mongoose.Schema({
     }
 })
 
-export default mongoose.model("PayGrade", PayGradeSchema)
+export default mongoose.model("Paygrades", PaygradeSchema)

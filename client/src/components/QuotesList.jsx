@@ -1,6 +1,6 @@
-import { Table } from "./styles/table.styled"
-import { List, ListItem, ListItemButton, ListItemIcon,
-ListItemText, Checkbox, IconButton, Tooltip, Button} from '@mui/material'
+import { ListStyled } from "./styles/quotesList.styled"
+import { List, ListItem, ListItemIcon,
+ListItemText, Checkbox, IconButton, Tooltip, Button, ListItemAvatar} from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import { useState } from 'react'
@@ -14,44 +14,60 @@ const quotes = [
 export default function QuoteTable() {
     const [selected, setSelected] = useState([])
 
-    const editClick = (quote) => {
+    const editQuote = (quote) => {
 
     }
 
-    const deleteClick = (quote) => {
+    const deleteQuote = (quote) => {
         
+    }
+
+    const checkOnChange = (e, thisQuote) => {
+        if(e.target.checked) {
+            setSelected([...selected, thisQuote])  
+        }
+        else if(!e.target.checked) {
+            const filter = selected.filter(quote => quote.name !== thisQuote.name) // TODO change to id
+            setSelected(filter) 
+        }       
+    }
+
+    const combineQuotes = () => {
+
     }
 
     return(
         <>
+            <ListStyled>
             <List>
-                {quotes && quotes.map(quote => {
+                {quotes && quotes.map((quote, index) => {
                     return(
-                        <div>
+                        <div key={index}>
                             <ListItem secondaryAction={
                                 <>
                                     <Tooltip title="Edit">
-                                        <IconButton edge="end" aria-label="edit" onClick={() => editClick(quote)}>
+                                        <IconButton edge="end" aria-label="edit" onClick={() => editQuote(quote)}>
                                             <EditIcon />
                                         </IconButton>
                                     </Tooltip>
                                     <Tooltip title="Delete">
-                                        <IconButton edge="end" aria-label="delete" onClick={() => deleteClick(quote)}>
+                                        <IconButton edge="end" aria-label="delete" onClick={() => deleteQuote(quote)}>
                                             <DeleteIcon />
                                         </IconButton>
                                     </Tooltip>
                                 </>
                             }>
-                                <ListItemButton role={undefined} dense>
+                                <ListItemAvatar>
                                     <ListItemIcon>
                                         <Checkbox
                                             // edge="start"
                                             tabIndex={-1}
                                             disableRipple
                                             inputProps={{ 'aria-labelledby': '' }} // TODO change to id
+                                            onChange={e => checkOnChange(e, quote)}
                                         />
                                     </ListItemIcon>
-                                </ListItemButton>
+                                </ListItemAvatar>
 
                                 <ListItemText primary={quote.name}/>
 
@@ -60,24 +76,10 @@ export default function QuoteTable() {
                     )
                 })}
             </List>
+            </ListStyled>
 
-            <Button variant="contained" disabled>Combine</Button>
-
-            {/* <Table>
-                <thead>
-                    <tr>
-                        <th>Quote</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {quotes.map(quote => {
-                        return (
-                        <tr>
-                            <td>{quote.name}</td>
-                        </tr>)
-                    })}
-                </tbody>
-            </Table> */}
+            {selected.length > 1 &&
+            <Button variant="contained" onClick={combineQuotes}>Combine</Button>}
         </>
     )
 }

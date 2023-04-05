@@ -17,7 +17,7 @@ export default function HumanResource({resource, setResource}) {
     return(
         <>
             <Box sx={{ minWidth: 120 }}>
-                <FormControl required>
+                <FormControl required className="input-container">
                     <InputLabel id="pay-grade-label">Pay grade</InputLabel>
                     <Select
                         labelId="pay-grade-label"
@@ -33,7 +33,7 @@ export default function HumanResource({resource, setResource}) {
                 </FormControl>
             </Box>
 
-            <div>
+            <div className="input-container">
                 <TextField
                     id="no-of-workers"
                     label="Number of workers"
@@ -44,7 +44,7 @@ export default function HumanResource({resource, setResource}) {
                 />
             </div>
 
-            <div>
+            <div className="input-container">
                 <TextField
                     id="time"
                     label="Time required"

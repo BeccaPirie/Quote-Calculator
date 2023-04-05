@@ -17,18 +17,33 @@ import Quote from "../components/Quote"
 import Collapse from "@mui/material/Collapse"
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
+import { Alert, ButtonGroup } from "@mui/material"
+import { AlertStyled } from "../components/styles/alert.styled"
 
 export default function Home() {
     const [newResource, setNewResource] = useState({})
     const [resources, setResources] = useState([])
     const [showBudget, setShowBudget] = useState(false)
     const [openForm, setOpenForm] = useState(false)
+    const [alert, setAlert] = useState(false)
+    const [btnText, setBtnText] = useState('Add')
     const { user } = useContext(UserContext)
 
     const resourceTypes = ["Physical Resource", "Human Resource"]
 
+    // timeout function for displaying alert
+    const displayAlert = () => {
+        setAlert(true)
+        setTimeout(() => {
+            setAlert(false)
+        }, 3000)
+    }
+
     // function for when resource type is changed
     const resourceTypeChange = (e) => {
+        if(btnText === 'Save') {
+            setBtnText('Add')
+        }
         setNewResource({...newResource, type: e.target.value})
         setOpenForm(true)
     }
@@ -36,14 +51,24 @@ export default function Home() {
     // functioned called on form submit
     const onSubmit = (e) => {
         e.preventDefault()
-        // add object to resources array
-        setResources(resources => [...resources, newResource])
-        setNewResource({type:newResource.type})
+        if(btnText === 'Add') {
+            // add object to resources array
+            setResources(resources => [...resources, newResource])   
+        }
+        else if(btnText === 'Save') {
+            // find the resource in resources and update
+            setBtnText('Add')
+        }
+        setNewResource({type:newResource.type}) 
     }
 
     // send resources to server to calculate quote
     const calculateQuote = () => {
-        // then
+        if(resources.length === 0) {
+            displayAlert()
+            return
+        }
+
         setNewResource({})
         setOpenForm(false)
         setShowBudget(true)
@@ -57,6 +82,14 @@ export default function Home() {
 
     return(
         <>
+            {/* at least one human resource */}
+            {alert &&
+                <AlertStyled>
+                    <Alert severity="info" onClose={() => {setAlert(false)}}>
+                        Please add at least one resource to calculate quote
+                    </Alert>
+                </AlertStyled>}
+
             <Navbar />
                 <Container>
                 <h3>Fill in the form below to add a resource to your quote</h3>
@@ -77,25 +110,31 @@ export default function Home() {
                                 })}
                             </Select>
                         </FormControl>
-                        {openForm && newResource.type !== undefined ?
-                            <ExpandLess onClick={() => setOpenForm(false)}/>
-                             : <ExpandMore onClick={() => setOpenForm(true)}/>}
+                        {newResource.type && 
+                        <>
+                            {openForm ?
+                            <ExpandLess className="expand" onClick={() => setOpenForm(false)}/>
+                             : <ExpandMore className="expand" onClick={() => setOpenForm(true)}/>}
+                        </>}
                     </Box>
-
 
                     <Collapse in={openForm && newResource.type !== undefined} timeout="auto">
                         <div className="resource-form">
                             {newResource.type === resourceTypes[0] && <PhysicalResource resource={newResource} setResource={setNewResource}/>}
                             {newResource.type === resourceTypes[1] && <HumanResource resource={newResource} setResource={setNewResource}/>}
                         </div>
-                        <Button type="submit">Add</Button>
+                        <Button type="submit">{btnText === 'Add' ? 'Add' : 'Save'}</Button>
                     </Collapse>
                 </ResourceForm>
 
-                {resources.length > 0 && <ResourceTable resources={resources}/>}
+                {resources.length > 0 && <ResourceTable resources={resources} setNewResource={setNewResource} setBtnText={setBtnText}/>}
 
-                <Button onClick={calculateQuote}>Calculate Quote</Button>
-                {(user && user.admin) && <Button onClick={calculateQuoteAdmin}>Calculate Quote Without Fudge Factor</Button>}
+                <ButtonGroup className="btn-container" variant="contained">
+                    <Button onClick={calculateQuote}>Calculate Quote</Button>
+                    {/* {(user && user.admin) &&  */}
+                    <Button className="admin" onClick={calculateQuoteAdmin}>Calculate Quote Without Fudge Factor</Button>
+                    {/* } */}
+                </ButtonGroup>
 
                 {showBudget && <Quote />}
             </Container>

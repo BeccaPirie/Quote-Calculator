@@ -1,7 +1,6 @@
-import PhysicalResourceSchema from './PhysicalResource';
-import HumanResourceSchema from './HumanResource'
-
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
+import PhysicalResourceSchema from './PhysicalResource.js';
+import HumanResourceSchema from './HumanResource.js';
 
 const QuoteSchema = new mongoose.Schema({
     userId: {

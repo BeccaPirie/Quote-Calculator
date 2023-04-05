@@ -10,23 +10,22 @@ export default function PhysicalResource({resource, setResource}) {
 
     return(
         <>
-            <div>
+            <div className="input-container">
                 <TextField
                     id="pr_name"
                     label="Resource"
-                    margin="normal"
                     required
                     value={resource.name || ""}
                     onChange={(e) => setResource({...resource, name: e.target.value})}
                 />
             </div>
 
-            <FormControl required>
+            <FormControl required className="input-container">
                 <FormLabel id="radio-group">Type of Cost</FormLabel>
                 <RadioGroup
                     aria-labelledby="radio-group"
                     name="type-of-cost"
-                    value={resource.costType}
+                    value={resource.costType || ''}
                     onChange={(e) => setResource({...resource, costType: e.target.value})}
                 >
                     <FormControlLabel value="One-off Payment" control={<Radio />} label="One-off Payment" />
@@ -35,7 +34,7 @@ export default function PhysicalResource({resource, setResource}) {
                 </RadioGroup>
             </FormControl>
 
-            <div>
+            <div className="input-container">
                 <TextField
                     id="cost"
                     label="Cost"

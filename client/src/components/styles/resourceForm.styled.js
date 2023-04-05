@@ -11,8 +11,9 @@ display: block;
     background-color: #ddd;
     padding: 15px 20px;
 
-    legend {
-        margin-top: 0;
+    .expand {
+        float: right;
+        margin-top: 15px;
     }
 }
 
@@ -25,46 +26,9 @@ display: block;
     width: 150px;
 }
 
-// input,  {
-//     :focus {
-//         outline: none;
-//     }
-// }
-
-// label:not(.radio-group label, #pay-grade-label), legend {
-//     display: block;
-//     margin-top: 15px;
-//     font-weight: bold;
-// }
-
-// label {
-//     display: block;
-// }
-
-// select {
-//     padding: 5px;
-//     width: 170px;
-//     border: none;
-// }
-
-// input[type="text"] {
-//     width: 75%;
-// }
-
-// input[type="number"] {
-//     width: 20%;
-// }
-
-// input[type="text"], input[type="number"] {
-//     padding: 3px;
-//     border: none;
-//     border-bottom: 2px solid black;
-//     background-color: #f4f4f4;
-// }
-
-// #hours-span {
-//     margin-left: 5px;
-// }
+.input-container {
+    margin-bottom: 20px;
+}
 
 button[type="submit"] {
     float: right;
