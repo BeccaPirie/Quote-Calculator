@@ -1,15 +1,30 @@
 import { TextField, InputLabel, InputAdornment, Alert } from '@mui/material'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Navbar from '../components/Navbar'
 import { Button } from '../components/styles/button.styled'
 import { AdminStyled } from '../components/styles/admin.styled'
 import { AlertStyled } from '../components/styles/alert.styled'
+import axios from 'axios'
 
 export default function Admin() {
-    const [junior, setJunior] = useState({type: "Junior", salary: "10000"})
-    const [standard, setStandard] = useState({type: "Standard", salary: "20000"})
-    const [senior, setSenior] = useState({type: "Senior", salary: "40000"})
+    // const [junior, setJunior] = useState({type: "Junior", salary: "10000"})
+    // const [standard, setStandard] = useState({type: "Standard", salary: "20000"})
+    // const [senior, setSenior] = useState({type: "Senior", salary: "40000"})
+
     const [alert, setAlert] = useState(false)
+    const [paygrades, setPaygrades] = useState([])
+
+    useEffect(() => {
+        const fetchPaygrades = async() => {
+            try {
+                const res = await axios.get('http://localhost:8000/api/paygrades/')
+                setPaygrades(res.data)
+            } catch (err) {
+                console.error(err.response.data)
+            }
+        }
+        fetchPaygrades()
+    }, [])
 
     const updatePaygrades = () => {
         displayAlert()
@@ -34,8 +49,25 @@ export default function Admin() {
             <Navbar />
             
             <AdminStyled>
+
+                {paygrades.length > 0 && 
+                    paygrades.map(paygrade => {
+                        return <>
+                        <InputLabel htmlFor={paygrade.type}>
+                            {paygrade.type}
+                        </InputLabel>
+                        <TextField
+                            id="junior"
+                            value={paygrade.salary || ''}
+                            // onChange={(e) => }
+                            InputProps={{
+                                startAdornment:<InputAdornment position="start">£</InputAdornment>
+                            }}/>
+                        </>
+                    })
+                }
             
-                <InputLabel htmlFor="junior">
+                {/* <InputLabel htmlFor="junior">
                     Junior
                 </InputLabel>
                 <TextField
@@ -66,7 +98,7 @@ export default function Admin() {
                     onChange={(e) => setSenior({...senior, salary: e.target.value})}
                     InputProps={{
                         startAdornment:<InputAdornment position="start">£</InputAdornment>
-                    }}/>
+                    }}/> */}
             
             <div className="btn-div">
                 <Button type="submit" onClick={updatePaygrades}>Update</Button>

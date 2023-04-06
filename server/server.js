@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import config from './config.js';
 import bodyParser from 'body-parser';
+import cors from 'cors'
 import authRoute from './routes/auth.js';
 import userRoute from './routes/user.js';
 import quotesRoute from './routes/quotes.js';
@@ -11,6 +12,7 @@ const app = express();
 const PORT = config.port
 const MONGODB_URI = config.mongoUri
 
+app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 

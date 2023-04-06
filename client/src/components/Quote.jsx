@@ -14,47 +14,61 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import axios from 'axios'
 
-export default function Quote() {
-    const { user } = useContext(UserContext)
+export default function Quote({total, resources}) {
+    const { user, dispatch } = useContext(UserContext)
     const [showDialog, setShowDialog] = useState(false)
     const [loginDialog, setLoginDialog] = useState(false)
     const [selectQuote, setSelectQuote] = useState('New')
-
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [error, setError] = useState(false)
+    const [quoteName, setQuoteName] = useState('')
 
     const placeholderQuotes = ["Quote One", "Quote Two", "Quote Three"]
 
     // ***** HANDLE SAVE BUTTON CLICK *****
     const saveQuoteClick = () => {
         // check if user is logged in
-        if(user) {
-            saveQuote()
-            
-        }
-        else {
-            setLoginDialog(true)
-        }
+        if(user) setShowDialog(true)
+        else setLoginDialog(true)
     }
 
     // ***** HANDLE LOGIN BUTTON CLICK *****
-    const loginSubmit = () => {
-        // login user
-        // then ...
-        saveQuote()
-    }
+    const loginSubmit = async() => {
+        const credentials = {
+            email: email,
+            password: password
+        }
 
-    // ***** SAVE QUOTE FUNCTIONALITY *****
-    const saveQuote = () => {
-        // save quote
-        // navigate to profile
+        // login user
+        try {
+            const res = await axios.post("http://localhost:8000/api/auth/login", credentials)
+            dispatch({ type: "LOGIN_SUCCESS", payload: res.data})
+            setError(false)
+        } catch (err) {
+            console.error(err.response.data)
+            setError(true)
+        }
+        // then ...
         setLoginDialog(false)
         setShowDialog(true)
     }
 
+    // ***** HANDLE DIALOG SAVE QUOTE CLICK *****
+    const saveSubmit = async() => {
+        try {
+            // save quote
+            // navigate to profile
+        } catch (err) {
+            console.error(err.response.data)
+        }
+    }
+
     return(
         <>
-            {/* <ResourceTable /> */}
-            <h3>Estimated budget: £17,000</h3>
+            <h3>Estimated budget: {total}</h3>
             <Button onClick={saveQuoteClick}>Save Quote</Button>
 
             <Dialog open={loginDialog} onClose={() => setLoginDialog(false)}>              
@@ -71,6 +85,8 @@ export default function Quote() {
                         type="email"
                         fullWidth
                         variant="outlined"
+                        value={email || ''}
+                        onChange={(e) => setEmail(e.target.value)}
                     />
                     <TextField
                         autoFocus
@@ -80,6 +96,9 @@ export default function Quote() {
                         type="password"
                         fullWidth
                         variant="outlined"
+                        value={password || ''}
+                        onChange={(e) => setPassword(e.target.value)}
+                        helperText={error ? "Username or password is incorrect" : ""}
                     />
                     <DialogContentText>
                         Don't have an account? <Link to='/register'>Sign up</Link>
@@ -127,12 +146,14 @@ export default function Quote() {
                         type="text"
                         fullWidth
                         variant="outlined"
+                        value={quoteName || ''}
+                        onChange={(e) => setQuoteName(e.target.value)}
                     />
                     
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={() => setShowDialog(false)}>Cancel</Button>
-                    <Button onClick={loginSubmit}>Save</Button>
+                    <Button onClick={saveSubmit}>Save</Button>
                 </DialogActions>
             </Dialog> 
         </>

@@ -13,7 +13,7 @@ export const UserContextProvider = ({children}) => {
     const [state, dispatch] = useReducer(UserReducer, INITIAL_STATE)
 
     useEffect(() => {
-        localStorage.setItem('HabitAppUser', JSON.stringify(state.user))
+        localStorage.setItem('QuoteAppUser', JSON.stringify(state.user))
     }, [state.user])
 
     return(

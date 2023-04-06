@@ -19,6 +19,7 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { Alert, ButtonGroup } from "@mui/material"
 import { AlertStyled } from "../components/styles/alert.styled"
+import axios from 'axios'
 
 export default function Home() {
     const [newResource, setNewResource] = useState({})
@@ -28,6 +29,7 @@ export default function Home() {
     const [alert, setAlert] = useState(false)
     const [btnText, setBtnText] = useState('Add')
     const { user } = useContext(UserContext)
+    const [quoteTotal, setQuoteTotal] = useState(0)
 
     const resourceTypes = ["Physical Resource", "Human Resource"]
 
@@ -48,7 +50,7 @@ export default function Home() {
         setOpenForm(true)
     }
 
-    // functioned called on form submit
+    // function called on form submit
     const onSubmit = (e) => {
         e.preventDefault()
         if(btnText === 'Add') {
@@ -67,6 +69,13 @@ export default function Home() {
         if(resources.length === 0) {
             displayAlert()
             return
+        }
+
+        try {
+            const res = axios.post('http://localhost:8000/api/quotes/calc-quote')
+            setQuoteTotal(res.data)
+        } catch (err) {
+            console.error(err.response.data)
         }
 
         setNewResource({})
@@ -131,12 +140,12 @@ export default function Home() {
 
                 <ButtonGroup className="btn-container" variant="contained">
                     <Button onClick={calculateQuote}>Calculate Quote</Button>
-                    {/* {(user && user.admin) &&  */}
+                    {(user && user.admin) && 
                     <Button className="admin" onClick={calculateQuoteAdmin}>Calculate Quote Without Fudge Factor</Button>
-                    {/* } */}
+                    }
                 </ButtonGroup>
 
-                {showBudget && <Quote />}
+                {showBudget && <Quote total={quoteTotal} resources={resources}/>}
             </Container>
         </>
     )

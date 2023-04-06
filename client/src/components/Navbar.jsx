@@ -40,7 +40,7 @@ export default function Navbar() {
                         <Link to="/profile">
                             <li>Profile</li>
                         </Link>
-                        <Link to="/admin-page">
+                        <Link to="/admin">
                             <li>Admin</li>
                         </Link>
                     </>}
