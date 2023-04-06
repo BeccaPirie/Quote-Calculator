@@ -8,7 +8,7 @@ const getUser = async(req, res) => {
 
 const updateUser = async(req, res) => {
     try {
-        const currentUser = await User.findById(req.user._id)
+        const currentUser = await User.findById(req.params.id)
         
         // if email is changed, check it is valid and that it's not already in use
         if(currentUser.email !== req.body.email) {
@@ -19,7 +19,7 @@ const updateUser = async(req, res) => {
         }
 
         // update user
-        await User.findByIdAndUpdate(req.user._id, {
+        await User.findByIdAndUpdate(req.params.id, {
             $set: {
                 username: req.body.username,
                 email: req.body.email
@@ -34,7 +34,7 @@ const updateUser = async(req, res) => {
 const updatePassword = async(req, res) => {
     try {
         // check if old password is correct
-        const currentUser = await User.findById(req.user._id)
+        const currentUser = await User.findById(req.params.id)
         const password = await bcrypt.compare(req.body.oldPassword, currentUser.password)
         if(!password) return res.status(400).json("Incorrect password")
 
@@ -51,7 +51,7 @@ const updatePassword = async(req, res) => {
         const newPassword = await bcrypt.hash(req.body.newPassword, bcryptPass)
 
         // update user account with new password
-        await User.findByIdAndUpdate(req.user._id, {
+        await User.findByIdAndUpdate(req.params.id, {
             $set: {password: newPassword}
         })
         res.status(200).json(newPassword)
@@ -62,7 +62,7 @@ const updatePassword = async(req, res) => {
 
 const deleteUser = async(req, res) => {
     try {
-        await User.findByIdAndDelete(req.user._id)
+        await User.findByIdAndDelete(req.params.id)
         res.status(200).json("User deleted")
     } catch (err) {
         res.status(500).json(err)

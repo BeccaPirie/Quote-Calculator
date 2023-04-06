@@ -37,22 +37,22 @@ const signUp = async(req, res) => {
         // save user
         const user = await createUser.save()
 
-        const token = generateToken(user._id)
-        const refreshToken = generateRefreshToken(user._id)
+        // const token = generateToken(user._id)
+        // const refreshToken = generateRefreshToken(user._id)
 
-        await user.updateOne({
-            $set: {
-                token: token,
-                refreshToken: refreshToken
-            }
-        })
+        // await user.updateOne({
+        //     $set: {
+        //         token: token,
+        //         refreshToken: refreshToken
+        //     }
+        // })
 
         res.json({
             _id: user._id,
             username: user.username,
             email: user.email,
-            token: token,
-            refreshToken: refreshToken
+            // token: token,
+            // refreshToken: refreshToken
         })
     } catch (err) {
         res.status(500).json(err)
@@ -66,22 +66,22 @@ const login = async(req, res) => {
         if(!loginUser || !isValid) return res.status(404).json("Username or password is incorrect")
 
         // generate new tokens
-        const token = await generateToken(loginUser._id)
-        const refreshToken = await generateRefreshToken(loginUser._id)
+        // const token = await generateToken(loginUser._id)
+        // const refreshToken = await generateRefreshToken(loginUser._id)
 
-        await loginUser.updateOne({
-            $set: {
-                token: token,
-                refreshToken: refreshToken
-            }
-        })
+        // await loginUser.updateOne({
+        //     $set: {
+        //         token: token,
+        //         refreshToken: refreshToken
+        //     }
+        // })
 
         res.json({
             _id: loginUser._id,
             username: loginUser.username,
             email: loginUser.email,
-            token: token,
-            refreshToken: refreshToken
+            // token: token,
+            // refreshToken: refreshToken
         })
     } catch (err) {
         res.status(500).json(err)
