@@ -8,7 +8,7 @@ const PhysicalResourceSchema = new mongoose.Schema({
 
     costType: {
         type: String,
-        enum: ['One-off Payment', 'Weekly Payments', 'Monthly Payment'],
+        enum: ['One-off Payment', 'Weekly Payments', 'Monthly Payments'],
         required: true
     },
     

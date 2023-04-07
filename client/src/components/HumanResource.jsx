@@ -5,15 +5,21 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
-import { useState } from 'react'
-
-const payGrades = [
-        {type: "Junior", salary: 20000},
-        {type: "Standard", salary: 40000},
-        {type: "Senior", salary: 60000}
-    ]
+import { useState, useEffect } from 'react'
+import axios from 'axios';
 
 export default function HumanResource({resource, setResource}) {
+    const [paygrades, setPaygrades] = useState([])
+
+    // fetch paygrades
+    useEffect(() => {
+        const fetchPaygrades = async() => {
+            const res = await axios.get('http://localhost:8000/api/paygrades/')
+            setPaygrades(res.data)
+        }
+        fetchPaygrades()
+    }, [])
+
     return(
         <>
             <Box sx={{ minWidth: 120 }}>
@@ -22,12 +28,12 @@ export default function HumanResource({resource, setResource}) {
                     <Select
                         labelId="pay-grade-label"
                         id="pay-grade-select"
-                        value={resource.payGrade || ''}
+                        value={resource.paygrade || ''}
                         label="Pay Grade"
-                        onChange={(e) => setResource({...resource, payGrade: e.target.value})}
+                        onChange={(e) => setResource({...resource, paygrade: e.target.value})}
                     >
-                        {payGrades.map(payGrade => {
-                            return <MenuItem value={payGrade.type}>{payGrade.type}</MenuItem>
+                        {paygrades.map(paygrade => {
+                            return <MenuItem key={paygrade._id} value={paygrade.type}>{paygrade.type}</MenuItem>
                         })}
                     </Select>
                 </FormControl>

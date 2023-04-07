@@ -28,18 +28,14 @@ const getQuote = async(req, res) => {
 const calcQuote = async(req, res) => {
     try {
         // TODO server validation
-        const total = calculateQuote(req.body, true)
-        res.json({total:total})
-    } catch (err) {
-        res.status(500).json(err)
-    }
-}
-
-const calcQuoteAdmin = async(req, res) => {
-    try {
-        // TODO server validation
-        const total = calculateQuote(req.body, false)
-        res.json({total:total})
+        // if(!req.body.fudgeFactor) {
+        //     const user = await User.findById(req.params.id)
+        //     if(!user.isAdmin) {
+        //         return res.status(404).json("Don't have necessary permissions")
+        //     }
+        // }
+        const total = await calculateQuote(req.body)
+        res.json(total)
     } catch (err) {
         res.status(500).json(err)
     }
@@ -50,7 +46,8 @@ const addQuote = async(req, res) => {
         const newQuote = new Quotes({
             ...req.body
         })
-        await newQuote.save() 
+        await newQuote.save()
+        res.json("Quote added")
     } catch (err) {
         res.status(500).json(err)
     }
@@ -72,11 +69,12 @@ const deleteQuote = async(req, res) => {
             _id: req.params.quoteId,
             userId: user._id
         })
+        res.json("Quote deleted")
     } catch (err) {
         res.status(500).json(err)
     }
 }
 
 export default {
-    getUsersQuotes, getQuote, calcQuote, calcQuoteAdmin, addQuote, updateQuote, deleteQuote
+    getUsersQuotes, getQuote, calcQuote, addQuote, updateQuote, deleteQuote
 }

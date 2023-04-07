@@ -23,18 +23,25 @@ import axios from 'axios'
 
 export default function Home() {
     const [newResource, setNewResource] = useState({})
+    // all resources to display in table
     const [resources, setResources] = useState([])
+    // human resources
+    const [humanResources, setHumanResources] = useState([])
+    // physical resources
+    const [physicalResources, setPhyscialResources] = useState([])
     const [showBudget, setShowBudget] = useState(false)
     const [openForm, setOpenForm] = useState(false)
+    // alert state
     const [alert, setAlert] = useState(false)
+    const [alertText, setAlertText] = useState('')
     const [btnText, setBtnText] = useState('Add')
-    const { user } = useContext(UserContext)
     const [quoteTotal, setQuoteTotal] = useState(0)
-
+    const { user } = useContext(UserContext)
     const resourceTypes = ["Physical Resource", "Human Resource"]
 
     // timeout function for displaying alert
-    const displayAlert = () => {
+    const displayAlert = (alertText) => {
+        setAlertText(alertText)
         setAlert(true)
         setTimeout(() => {
             setAlert(false)
@@ -54,9 +61,22 @@ export default function Home() {
     const onSubmit = (e) => {
         e.preventDefault()
         if(btnText === 'Add') {
-            // add object to resources array
-            setResources(resources => [...resources, newResource])   
+            // TODO form validation
+            if(newResource.type === resourceTypes[0]) {
+                setPhyscialResources(resources => [...resources, newResource])
+            }
+            if(newResource.type === resourceTypes[1]) {
+                if (newResource.workers < 1) {
+                    displayAlert('Please add at least one worker')
+                    return
+                }
+                setHumanResources(resources => [...resources, newResource])
+            }
+            
+            // add object to resources array to display in table
+            setResources(resources => [...resources, newResource])
         }
+        // TODO
         else if(btnText === 'Save') {
             // find the resource in resources and update
             setBtnText('Add')
@@ -65,14 +85,25 @@ export default function Home() {
     }
 
     // send resources to server to calculate quote
-    const calculateQuote = () => {
+    const calculateQuote = async(ff) => {
         if(resources.length === 0) {
-            displayAlert()
+            displayAlert('Please add at least one resource to calculate a quote')
             return
         }
 
+        if(humanResources.length === 0) {
+            displayAlert('Please add at least one human resource to calculate a quote')
+            return
+        }
+
+        const resourcesObj = {
+            humanResources: humanResources,
+            physicalResources: physicalResources,
+            fudgeFactor: ff
+        }
+
         try {
-            const res = axios.post('http://localhost:8000/api/quotes/calc-quote')
+            const res = await axios.post(`http://localhost:8000/api/quotes/calc-quote`, resourcesObj)
             setQuoteTotal(res.data)
         } catch (err) {
             console.error(err.response.data)
@@ -83,19 +114,12 @@ export default function Home() {
         setShowBudget(true)
     }
 
-    // send resources to server to calculate quote without fudge factor
-    const calculateQuoteAdmin = () => {
-        setOpenForm(false)
-        setShowBudget(true)
-    }
-
     return(
         <>
-            {/* at least one human resource */}
             {alert &&
                 <AlertStyled>
                     <Alert severity="info" onClose={() => {setAlert(false)}}>
-                        Please add at least one resource to calculate quote
+                        {alertText}
                     </Alert>
                 </AlertStyled>}
 
@@ -139,13 +163,19 @@ export default function Home() {
                 {resources.length > 0 && <ResourceTable resources={resources} setNewResource={setNewResource} setBtnText={setBtnText}/>}
 
                 <ButtonGroup className="btn-container" variant="contained">
-                    <Button onClick={calculateQuote}>Calculate Quote</Button>
-                    {(user && user.admin) && 
-                    <Button className="admin" onClick={calculateQuoteAdmin}>Calculate Quote Without Fudge Factor</Button>
+                    <Button onClick={() => calculateQuote(true)}>Calculate Quote</Button>
+                    {(user && user.isAdmin) && 
+                    <Button className="admin" onClick={() => calculateQuote(false)}>Calculate Quote Without Fudge Factor</Button>
                     }
                 </ButtonGroup>
 
-                {showBudget && <Quote total={quoteTotal} resources={resources}/>}
+                {showBudget &&
+                <Quote
+                    total={quoteTotal}
+                    physicalResources={physicalResources}
+                    humanResources={humanResources}
+                    displayAlert={displayAlert}
+                />}
             </Container>
         </>
     )

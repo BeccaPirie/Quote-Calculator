@@ -1,6 +1,6 @@
 import { NavbarStyled } from "./styles/navbar.styled"
 import { Link } from "react-router-dom"
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { UserContext } from '../context/user/UserContext';
 
 export default function Navbar() {
@@ -28,15 +28,23 @@ export default function Navbar() {
                         </Link>
                     </>}
 
-                    {/* if signed in and admin*/}
-                    {(user && user.admin) &&
-                    <Link to="/profile">
-                        <li>Profile</li>
-                    </Link>}
-
-                    {/* if signed in */}
-                    {(user && !user.admin) &&
+                    {/* if signed in and not admin*/}
+                    {(user && !user.isAdmin) &&
                     <>
+                        <Link to="/quotes">
+                            <li>Quotes</li>
+                        </Link>
+                        <Link to="/profile">
+                            <li>Profile</li>
+                        </Link>
+                    </>}
+
+                    {/* if signed in and admin*/}
+                    {(user && user.isAdmin) &&
+                    <>
+                        <Link to="/quotes">
+                            <li>Quotes</li>
+                        </Link>
                         <Link to="/profile">
                             <li>Profile</li>
                         </Link>

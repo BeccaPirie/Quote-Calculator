@@ -1,26 +1,40 @@
-export const calculateQuote = (quote, ff) => {
-    
+import Paygrades from "../models/Paygrades.js";
+
+export const calculateQuote = async(resources) => {
     // first, calculate the fudge factor
-    if(ff) {
-        fudgeFactor(quote)
-    }   
+    if(resources.fudgeFactor) {
+        fudgeFactor(resources)
+    }
+    
+    // fetch paygrade
+    const paygrades = await Paygrades.find({})
 
-    // then, add up all human resources and all physical resources
-    const hr = quote.humanResources.reduce((total, res) => {
-        const cost = res.workers * res.rate * res.time // ***
-        return total + cost
-    })
+    // calculate total of human resources
+    const hr = resources.humanResources.reduce(function (total, obj) {
+        console.log(obj.paygrade)
+        const paygrade = paygrades.find(paygrade => paygrade.type === obj.paygrade)
+        return total + (obj.workers * paygrade.salary * obj.time)
+    }, 0)
+    console.log(hr)
+    
+    // if no physical resources, return hr
+    if(resources.physicalResources.length === 0) {
+        return hr
+    }
 
-    const pr = quote.physicalResources.reduce((total, res) => {
-        return total + res.cost // ***
-    })
+    // calculate total of physical resources
+    const pr = resources.physicalResources.reduce(function (total, obj) {
+        return total + obj.cost // FIXME
+    }, 0)
 
     // then, add up and return cost of all resources
-    return hr + pr
+    const quoteTotal = parseInt(hr) + parseInt(pr)
+    console.log(quoteTotal)
+    return parseInt(quoteTotal).toFixed(2)
 }
 
-const fudgeFactor = (quote) => {
-    const randomResource = quote.humanResources[Math.floor(Math.random() * quote.humanResources.length)]
+const fudgeFactor = (resources) => {
+    const randomResource = resources.humanResources[Math.floor(Math.random() * resources.humanResources.length)]
     const keys = Object.keys(randomResource)
     const randomKey = keys[Math.floor(Math.random() * keys.length)]
     const randomVal = randomResource[randomKey]

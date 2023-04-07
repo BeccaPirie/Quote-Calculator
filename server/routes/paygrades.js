@@ -5,7 +5,7 @@ const router = express.Router()
 
 router.get('/', paygradesCtrl.getPaygrades)
 router.post('/add', paygradesCtrl.addPaygrade)
-router.put('/update', paygradesCtrl.updatePaygrades)
+router.put('/update/:id', paygradesCtrl.updatePaygrades)
 router.put('/delete', paygradesCtrl.deletePaygrades)
 
 export default router;
