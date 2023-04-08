@@ -1,29 +1,33 @@
 import Paygrades from "../models/Paygrades.js";
 
-export const calculateQuote = async(resources) => {
-    // first, calculate the fudge factor
-    if(resources.fudgeFactor) {
-        fudgeFactor(resources)
-    }
+export const calculateQuote = async(obj) => {
+
+    // first, split resources by type
+    const humanResources = obj.resources.filter(resource => resource.type === "Human Resource")
+    const physicalResources = obj.resources.filter(resource => resource.type === "Physical Resource")
     
+    // calculate the fudge factor
+    if(obj.fudgeFactor) {
+        fudgeFactor(humanResources)
+    }
+
     // fetch paygrade
     const paygrades = await Paygrades.find({})
 
     // calculate total of human resources
-    const hr = resources.humanResources.reduce(function (total, obj) {
-        console.log(obj.paygrade)
+    const hr = humanResources.reduce(function (total, obj) {
         const paygrade = paygrades.find(paygrade => paygrade.type === obj.paygrade)
         return total + (obj.workers * paygrade.salary * obj.time)
     }, 0)
     console.log(hr)
     
     // if no physical resources, return hr
-    if(resources.physicalResources.length === 0) {
+    if(physicalResources.length === 0) {
         return hr
     }
 
     // calculate total of physical resources
-    const pr = resources.physicalResources.reduce(function (total, obj) {
+    const pr = physicalResources.reduce(function (total, obj) {
         return total + obj.cost // FIXME
     }, 0)
 
@@ -34,7 +38,7 @@ export const calculateQuote = async(resources) => {
 }
 
 const fudgeFactor = (resources) => {
-    const randomResource = resources.humanResources[Math.floor(Math.random() * resources.humanResources.length)]
+    const randomResource = resources[Math.floor(Math.random() * resources.length)]
     const keys = Object.keys(randomResource)
     const randomKey = keys[Math.floor(Math.random() * keys.length)]
     const randomVal = randomResource[randomKey]

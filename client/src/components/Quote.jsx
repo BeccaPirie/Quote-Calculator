@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { UserContext } from '../context/user/UserContext';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -7,7 +7,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -15,7 +15,7 @@ import Select from '@mui/material/Select';
 import axios from 'axios'
 import { QuoteContext } from '../context/quotes/QuoteContext'
 
-export default function Quote({total, physicalResources, humanResources, displayAlert}) {
+export default function Quote({total, resources, displayAlert}) {
     const { user, dispatch } = useContext(UserContext)
     const [showDialog, setShowDialog] = useState(false)
     const [loginDialog, setLoginDialog] = useState(false)
@@ -25,6 +25,18 @@ export default function Quote({total, physicalResources, humanResources, display
     const [error, setError] = useState(false)
     const [quoteName, setQuoteName] = useState('')
     const { quotes, dispatch: quotesDispatch } = useContext(QuoteContext)
+    const quoteId = useParams().id
+
+    useEffect(() => {
+        const fetchQuote = async() => {
+            if(quoteId) {
+                const res = await axios.get(`http://localhost:8000/api/quotes/quote/${user._id}/${quoteId}`)
+                setQuoteName(res.data.name)
+                setSelectQuote(res.data.mainTaskId)
+            }
+        }
+        fetchQuote()
+    }, [user._id, quoteId])
 
     // ***** HANDLE SAVE BUTTON CLICK *****
     const saveQuoteClick = () => {
@@ -61,13 +73,20 @@ export default function Quote({total, physicalResources, humanResources, display
                 userId: user._id,
                 name: quoteName,
                 quote: total,
-                physicalResources: physicalResources,
-                humanResources: humanResources,
+                physicalResources: resources.filter(resource => resource.type === 'Physical Resource'),
+                humanResources: resources.filter(resource => resource.type === 'Human Resource'),
                 mainTaskId: selectQuote || ''
             }
-            // save quote
-            await axios.post(`http://localhost:8000/api/quotes/add/${user._id}`, newQuote)
-            quotesDispatch({type:"ADD_QUOTE", payload: newQuote})
+            // save updated quote
+            if(quoteId) {
+                await axios.put(`http://localhost:8000/api/quotes/update/${user._id}/${quoteId}`, newQuote)
+                quotesDispatch({type:"UPDATE_QUOTE", payload: newQuote})
+            }
+            // or add as new if not editing an existing quote
+            else {
+                await axios.post(`http://localhost:8000/api/quotes/add/${user._id}`, newQuote)
+                quotesDispatch({type:"ADD_QUOTE", payload: newQuote})
+            }
 
             setShowDialog(false)
             displayAlert("Quote Saved")

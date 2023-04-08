@@ -1,5 +1,4 @@
-import { ListItem, ListItemIcon,
-ListItemText, Checkbox, IconButton, Tooltip, Button, ListItemAvatar} from '@mui/material'
+import { ListItem, ListItemIcon, ListItemText, Checkbox, IconButton, Tooltip, ListItemAvatar} from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import { useContext } from 'react'
@@ -8,13 +7,15 @@ import { QuoteContext } from "../context/quotes/QuoteContext"
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 export default function QuoteItem({quote, checkOnChange, subtask, show, setShow}) {
     const { user } = useContext(UserContext)
     const { dispatch } = useContext(QuoteContext)
+    const navigate = useNavigate()
 
     const editQuote = (quote) => {
-        console.log("Editing quote " + quote.name)
+        navigate(`/${quote._id}`)
     }
 
     const deleteQuote = async(quote) => {
@@ -40,13 +41,19 @@ export default function QuoteItem({quote, checkOnChange, subtask, show, setShow}
                     </IconButton>
                 </Tooltip>
                 {!subtask &&
-                (show ? <ExpandLess onClick={() => setShow(false)}/> : <ExpandMore onClick={() => setShow(true)}/>)}
+                (show ? 
+                    <IconButton onClick={() => setShow(false)}>
+                        <ExpandLess />
+                    </IconButton> : 
+                    <IconButton onClick={() => setShow(true)}>
+                        <ExpandMore />
+                    </IconButton>
+                )}
             </>
         }>
             <ListItemAvatar>
                 <ListItemIcon>
                     <Checkbox
-                        // edge="start"
                         tabIndex={-1}
                         disableRipple
                         inputProps={{ 'aria-labelledby': quote._id }}

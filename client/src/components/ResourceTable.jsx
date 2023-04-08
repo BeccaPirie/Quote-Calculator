@@ -1,18 +1,17 @@
-import { Table } from "./styles/table.styled";
+import { Table } from "./styles/table.styled"
 import { IconButton, Tooltip } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 
-export default function ResourceTable({resources, setNewResource, setBtnText}) {
+export default function ResourceTable({resources, setResources, setNewResource, setBtnText}) {
 
-    const editResource = (resource) => {
+    const editResource = (resource, index) => {
         setNewResource(resource)
         setBtnText('Save')
     }
 
-    const deleteResource = (resource) => {
-        resources = resources.filter(thisResource => thisResource.id === resource.id)
-    
+    const deleteResource = (index) => {
+        setResources(resources.filter((_, j) => j !== index))
     }
 
     return(
@@ -39,12 +38,12 @@ export default function ResourceTable({resources, setNewResource, setBtnText}) {
                     </>}
                     <td>
                         <Tooltip title="Edit">
-                            <IconButton aria-label="edit" onClick={() => editResource(resource)}>
+                            <IconButton aria-label="edit" onClick={() => editResource(resource, index)}>
                                 <EditIcon />
                             </IconButton>
                         </Tooltip>
                         <Tooltip title="Delete">
-                            <IconButton aria-label="delete" onClick={() => deleteResource(resource)}>
+                            <IconButton aria-label="delete" onClick={() => deleteResource(index)}>
                                 <DeleteIcon />
                             </IconButton>
                         </Tooltip>

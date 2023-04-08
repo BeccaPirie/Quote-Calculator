@@ -55,6 +55,7 @@ const addQuote = async(req, res) => {
 
 const updateQuote = async(req, res) => {
     try {
+        console.log(req.body)
         await Quotes.findByIdAndUpdate(req.params.quoteId, {$set: req.body})
         res.json("Quote updated")
     } catch (err) {

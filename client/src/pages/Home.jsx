@@ -1,5 +1,5 @@
 import { ResourceForm } from "../components/styles/resourceForm.styled"
-import { useState } from "react"
+import { useState, useContext, useEffect } from "react"
 import Navbar from "../components/Navbar"
 import PhysicalResource from "../components/PhysicalResource"
 import HumanResource from "../components/HumanResource"
@@ -11,8 +11,8 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import { useContext } from 'react';
 import { UserContext } from '../context/user/UserContext';
+import { QuoteContext } from '../context/quotes/QuoteContext';
 import Quote from "../components/Quote"
 import Collapse from "@mui/material/Collapse"
 import ExpandLess from '@mui/icons-material/ExpandLess';
@@ -20,24 +20,31 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import { Alert, ButtonGroup } from "@mui/material"
 import { AlertStyled } from "../components/styles/alert.styled"
 import axios from 'axios'
+import { useParams } from 'react-router-dom'
 
 export default function Home() {
     const [newResource, setNewResource] = useState({})
-    // all resources to display in table
     const [resources, setResources] = useState([])
-    // human resources
-    const [humanResources, setHumanResources] = useState([])
-    // physical resources
-    const [physicalResources, setPhyscialResources] = useState([])
     const [showBudget, setShowBudget] = useState(false)
     const [openForm, setOpenForm] = useState(false)
-    // alert state
     const [alert, setAlert] = useState(false)
     const [alertText, setAlertText] = useState('')
     const [btnText, setBtnText] = useState('Add')
     const [quoteTotal, setQuoteTotal] = useState(0)
     const { user } = useContext(UserContext)
+    const { quotes } = useContext(QuoteContext) || []
     const resourceTypes = ["Physical Resource", "Human Resource"]
+    const quoteId = useParams().id
+
+    useEffect(() => {
+        const fetchQuote = async() => {
+            if(quoteId) {
+                const res = await axios.get(`http://localhost:8000/api/quotes/quote/${user._id}/${quoteId}`)
+                setResources(res.data.humanResources.concat(res.data.physicalResources))
+            }
+        }
+        fetchQuote()
+    }, [user._id, quoteId, quotes])
 
     // timeout function for displaying alert
     const displayAlert = (alertText) => {
@@ -60,17 +67,15 @@ export default function Home() {
     // function called on form submit
     const onSubmit = (e) => {
         e.preventDefault()
+        console.log(newResource)
         if(btnText === 'Add') {
             // TODO form validation
-            if(newResource.type === resourceTypes[0]) {
-                setPhyscialResources(resources => [...resources, newResource])
-            }
+
             if(newResource.type === resourceTypes[1]) {
                 if (newResource.workers < 1) {
                     displayAlert('Please add at least one worker')
                     return
                 }
-                setHumanResources(resources => [...resources, newResource])
             }
             
             // add object to resources array to display in table
@@ -79,6 +84,7 @@ export default function Home() {
         // TODO
         else if(btnText === 'Save') {
             // find the resource in resources and update
+            // ahhhhhh
             setBtnText('Add')
         }
         setNewResource({type:newResource.type}) 
@@ -91,14 +97,13 @@ export default function Home() {
             return
         }
 
-        if(humanResources.length === 0) {
+        if(resources.filter(resource => resource.type === resourceTypes[1]).length === 0) {
             displayAlert('Please add at least one human resource to calculate a quote')
             return
         }
 
         const resourcesObj = {
-            humanResources: humanResources,
-            physicalResources: physicalResources,
+            resources: resources,
             fudgeFactor: ff
         }
 
@@ -112,6 +117,13 @@ export default function Home() {
         setNewResource({})
         setOpenForm(false)
         setShowBudget(true)
+    }
+
+    // function to clear quote when clear button clicked
+    const clearQuote = () => {
+        setNewResource({})
+        setResources([])
+        setShowBudget(false)
     }
 
     return(
@@ -160,7 +172,7 @@ export default function Home() {
                     </Collapse>
                 </ResourceForm>
 
-                {resources.length > 0 && <ResourceTable resources={resources} setNewResource={setNewResource} setBtnText={setBtnText}/>}
+                {resources.length > 0 && <ResourceTable resources={resources} setResources={setResources} setNewResource={setNewResource} setBtnText={setBtnText}/>}
 
                 <ButtonGroup className="btn-container" variant="contained">
                     <Button onClick={() => calculateQuote(true)}>Calculate Quote</Button>
@@ -169,11 +181,12 @@ export default function Home() {
                     }
                 </ButtonGroup>
 
+                <Button onClick={() =>clearQuote()}>Clear All</Button>
+
                 {showBudget &&
                 <Quote
                     total={quoteTotal}
-                    physicalResources={physicalResources}
-                    humanResources={humanResources}
+                    resources={resources}
                     displayAlert={displayAlert}
                 />}
             </Container>

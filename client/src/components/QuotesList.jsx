@@ -24,7 +24,7 @@ export default function QuoteList({quote, subtasks, selected, setSelected}) {
                 <List>
                     {subtasks.length > 0 && subtasks.map(subtask => {
                         return(
-                            <QuoteItem quote={subtask} checkOnChange={checkOnChange} subtask={true}/>
+                            <QuoteItem key={subtask._id} quote={subtask} checkOnChange={checkOnChange} subtask={true}/>
                         )
                     })}
                 </List>

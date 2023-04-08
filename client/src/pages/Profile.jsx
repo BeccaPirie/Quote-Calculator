@@ -2,16 +2,29 @@ import Navbar from "../components/Navbar";
 import QuoteList from "../components/QuotesList";
 import { ListStyled } from "../components/styles/quotesList.styled"
 import { QuoteContext } from "../context/quotes/QuoteContext"
+import { UserContext } from "../context/user/UserContext"
 import { List, Button} from '@mui/material'
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 
 export default function Profile() {
-    const { quotes, dispatch } = useContext(QuoteContext)
+    const { quotes } = useContext(QuoteContext)
+    const { user } = useContext(UserContext)
     const [selected, setSelected] = useState([])
+    const [mainTasks, setMainTasks] = useState([])
 
     const combineQuotes = () => {
         console.log("combine button click")
     }
+
+    useEffect(() => {
+        const fetchMainTasks = async() => {
+            if(quotes.length > 0) {
+                const filter = quotes.filter(quote => quote.mainTaskId === '')
+                setMainTasks(filter)
+            }
+        }
+        fetchMainTasks()
+    }, [quotes, user._id])
 
     return(
         <>
@@ -19,10 +32,9 @@ export default function Profile() {
 
             <ListStyled>
                 <List>
-                {quotes.length > 0 && quotes.map((quote) => {
-                    if(quote.mainTaskId !== '') return <></>
+                {mainTasks.length > 0 && mainTasks.map((quote) => {
                     const subtasks = quotes.filter(q => q.mainTaskId === quote._id)
-                    return <QuoteList quote={quote} subtasks={subtasks} selected={selected} setSelected={setSelected}/>
+                    return <QuoteList key={quote._id} quote={quote} subtasks={subtasks} selected={selected} setSelected={setSelected}/>
                 })}
                 </List>
             </ListStyled>

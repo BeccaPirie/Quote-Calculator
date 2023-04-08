@@ -1,6 +1,11 @@
 import mongoose from "mongoose";
 
 const HumanResourceSchema = new mongoose.Schema({
+    type: {
+        type: String,
+        default: "Human Resource"
+    },
+
     paygrade: {
         type: String,
         enum: ['Junior', 'Standard', 'Senior'],
