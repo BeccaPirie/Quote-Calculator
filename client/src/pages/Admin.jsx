@@ -14,6 +14,7 @@ export default function Admin() {
     const [alert, setAlert] = useState(false)
     const { user } = useContext(UserContext)
 
+    // *** FETCH PAYGRADES ***
     useEffect(() => {
         const fetchPaygrades = async() => {
             try {
@@ -28,6 +29,7 @@ export default function Admin() {
         fetchPaygrades()
     }, [])
 
+    // *** UPDATE PAYGRADE ***
     const updatePaygrades = async(paygrade) => {
         try {
             await axios.put(`http://localhost:8000/api/paygrades/update/${user._id}`, paygrade)
@@ -37,6 +39,7 @@ export default function Admin() {
         }
     }
 
+    // *** DISPLAY ALERT ON SUCCESSFUL UPDATE ***
     const displayAlert = () => {
         setAlert(true)
         setTimeout(() => {

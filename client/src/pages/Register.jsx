@@ -16,6 +16,7 @@ export default function Register() {
     const [alertText, setAlertText] = useState('')
     const navigate = useNavigate()
 
+    // *** HANDLE REGISTER SUBMIT ***
     const handleSubmit = async(e) => {
         e.preventDefault()
 

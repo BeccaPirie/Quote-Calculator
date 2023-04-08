@@ -12,6 +12,7 @@ export default function Login() {
     const [error, setError] = useState(false)
     const [alertText, setAlertText] = useState('')
 
+    // *** HANDLE LOGIN SUBMIT ***
     const handleSubmit = async(e) => {
         e.preventDefault()
         const credentials = {

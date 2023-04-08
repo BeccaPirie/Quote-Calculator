@@ -7,8 +7,9 @@ export const calculateQuote = async(obj) => {
     const physicalResources = obj.resources.filter(resource => resource.type === "Physical Resource")
     
     // calculate the fudge factor
+    let ff = 1;
     if(obj.fudgeFactor) {
-        fudgeFactor(humanResources)
+        ff = Math.floor(Math.random() * (15-5) + 5) / 100
     }
 
     // fetch paygrade
@@ -17,9 +18,20 @@ export const calculateQuote = async(obj) => {
     // calculate total of human resources
     const hr = humanResources.reduce(function (total, obj) {
         const paygrade = paygrades.find(paygrade => paygrade.type === obj.paygrade)
-        return total + (obj.workers * paygrade.salary * obj.time)
+
+        // multiply salary, hours or number of workers by fudge factor
+        const options = [parseInt(paygrade.salary), parseInt(obj.time), parseInt(obj.workers)]
+        const random = Math.floor(Math.random() * options.length)
+        options[random] *= ff
+
+        // calculate cost of resource
+        const value = options.reduce(function (total, val) {
+            return total * val
+        }, 1)
+
+        // add resource cost to total
+        return total + value
     }, 0)
-    console.log(hr)
     
     // if no physical resources, return hr
     if(physicalResources.length === 0) {
@@ -28,20 +40,9 @@ export const calculateQuote = async(obj) => {
 
     // calculate total of physical resources
     const pr = physicalResources.reduce(function (total, obj) {
-        return total + obj.cost // FIXME
+        return total + parseInt(obj.cost) // FIXME
     }, 0)
 
     // then, add up and return cost of all resources
-    const quoteTotal = parseInt(hr) + parseInt(pr)
-    console.log(quoteTotal)
-    return parseInt(quoteTotal).toFixed(2)
-}
-
-const fudgeFactor = (resources) => {
-    const randomResource = resources[Math.floor(Math.random() * resources.length)]
-    const keys = Object.keys(randomResource)
-    const randomKey = keys[Math.floor(Math.random() * keys.length)]
-    const randomVal = randomResource[randomKey]
-    const fudgeFactor = Math.floor(Math.random() * (15-5) + 5) / 100
-    randomResource[randomKey] = randomVal * fudgeFactor
+    return (hr + pr).toFixed(2)
 }

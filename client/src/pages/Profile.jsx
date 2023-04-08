@@ -12,10 +12,12 @@ export default function Profile() {
     const [selected, setSelected] = useState([])
     const [mainTasks, setMainTasks] = useState([])
 
+    // TODO *** COMBINE QUOTES ***
     const combineQuotes = () => {
         console.log("combine button click")
     }
 
+    // *** FETCH QUOTES TO DISPLAY IN MAIN LIST ***
     useEffect(() => {
         const fetchMainTasks = async() => {
             if(quotes.length > 0) {

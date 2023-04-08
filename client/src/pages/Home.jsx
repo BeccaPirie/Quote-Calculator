@@ -29,13 +29,13 @@ export default function Home() {
     const [openForm, setOpenForm] = useState(false)
     const [alert, setAlert] = useState(false)
     const [alertText, setAlertText] = useState('')
-    const [btnText, setBtnText] = useState('Add')
     const [quoteTotal, setQuoteTotal] = useState(0)
     const { user } = useContext(UserContext)
     const { quotes } = useContext(QuoteContext) || []
     const resourceTypes = ["Physical Resource", "Human Resource"]
     const quoteId = useParams().id
 
+    // *** FETCH QUOTE IF ID PARAM ***
     useEffect(() => {
         const fetchQuote = async() => {
             if(quoteId) {
@@ -46,7 +46,7 @@ export default function Home() {
         fetchQuote()
     }, [user._id, quoteId, quotes])
 
-    // timeout function for displaying alert
+    // *** TIMEOUT FUNCTION FOR DISPLAYING ALERT ***
     const displayAlert = (alertText) => {
         setAlertText(alertText)
         setAlert(true)
@@ -55,42 +55,29 @@ export default function Home() {
         }, 3000)
     }
 
-    // function for when resource type is changed
+    // *** CHANGE RESOURCE TYPE SELECTED ***
     const resourceTypeChange = (e) => {
-        if(btnText === 'Save') {
-            setBtnText('Add')
-        }
         setNewResource({...newResource, type: e.target.value})
         setOpenForm(true)
     }
 
-    // function called on form submit
+    // *** RESOURCE FORM SUBMIT ***
     const onSubmit = (e) => {
         e.preventDefault()
         console.log(newResource)
-        if(btnText === 'Add') {
-            // TODO form validation
-
-            if(newResource.type === resourceTypes[1]) {
-                if (newResource.workers < 1) {
-                    displayAlert('Please add at least one worker')
-                    return
-                }
+        // TODO form validation
+        if(newResource.type === resourceTypes[1]) {
+            if (newResource.workers < 1) {
+                displayAlert('Please add at least one worker')
+                return
             }
-            
-            // add object to resources array to display in table
-            setResources(resources => [...resources, newResource])
         }
-        // TODO
-        else if(btnText === 'Save') {
-            // find the resource in resources and update
-            // ahhhhhh
-            setBtnText('Add')
-        }
+        // add object to resources array to display in table
+        setResources(resources => [...resources, newResource])
         setNewResource({type:newResource.type}) 
     }
 
-    // send resources to server to calculate quote
+    // *** CALCULATE QUOTE ***
     const calculateQuote = async(ff) => {
         if(resources.length === 0) {
             displayAlert('Please add at least one resource to calculate a quote')
@@ -119,7 +106,7 @@ export default function Home() {
         setShowBudget(true)
     }
 
-    // function to clear quote when clear button clicked
+    // *** REMOVE ALL RESOURCES FROM RESOURCE TABLE
     const clearQuote = () => {
         setNewResource({})
         setResources([])
@@ -168,11 +155,11 @@ export default function Home() {
                             {newResource.type === resourceTypes[0] && <PhysicalResource resource={newResource} setResource={setNewResource}/>}
                             {newResource.type === resourceTypes[1] && <HumanResource resource={newResource} setResource={setNewResource}/>}
                         </div>
-                        <Button type="submit">{btnText === 'Add' ? 'Add' : 'Save'}</Button>
+                        <Button type="submit">Add</Button>
                     </Collapse>
                 </ResourceForm>
 
-                {resources.length > 0 && <ResourceTable resources={resources} setResources={setResources} setNewResource={setNewResource} setBtnText={setBtnText}/>}
+                {resources.length > 0 && <ResourceTable resources={resources} setResources={setResources}/>}
 
                 <ButtonGroup className="btn-container" variant="contained">
                     <Button onClick={() => calculateQuote(true)}>Calculate Quote</Button>

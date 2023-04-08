@@ -14,10 +14,12 @@ export default function QuoteItem({quote, checkOnChange, subtask, show, setShow}
     const { dispatch } = useContext(QuoteContext)
     const navigate = useNavigate()
 
+    // *** NAVIGATE TO HOME PAGE TO EDIT QUOTE ***
     const editQuote = (quote) => {
         navigate(`/${quote._id}`)
     }
 
+    // ***** DELETE QUOTE *****
     const deleteQuote = async(quote) => {
         try {
             await axios.delete(`http://localhost:8000/api/quotes/delete/${user._id}/${quote._id}`)
@@ -51,6 +53,7 @@ export default function QuoteItem({quote, checkOnChange, subtask, show, setShow}
                 )}
             </>
         }>
+            {!subtask &&
             <ListItemAvatar>
                 <ListItemIcon>
                     <Checkbox
@@ -60,7 +63,7 @@ export default function QuoteItem({quote, checkOnChange, subtask, show, setShow}
                         onChange={e => checkOnChange(e, quote)}
                     />
                 </ListItemIcon>
-            </ListItemAvatar>
+            </ListItemAvatar>}
 
             <ListItemText primary={`${quote.name} - £${quote.quote}`}/>
         </ListItem>

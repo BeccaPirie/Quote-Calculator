@@ -27,6 +27,7 @@ export default function Quote({total, resources, displayAlert}) {
     const { quotes, dispatch: quotesDispatch } = useContext(QuoteContext)
     const quoteId = useParams().id
 
+    // *** FETCH QUOTE IF ID PARAM ***
     useEffect(() => {
         const fetchQuote = async() => {
             if(quoteId) {
@@ -98,6 +99,9 @@ export default function Quote({total, resources, displayAlert}) {
     return(
         <>
             <h3>Estimated budget: £{total || '00.00'}</h3>
+            <h3>Including subtasks:</h3>
+            <h3><i>include table of subtasks and quote</i></h3>
+            <h3><i>£17000.00</i></h3>
 
             <div className="info">
                 Human resources are calculated by considering the number of workers,

@@ -6,6 +6,7 @@ import QuoteItem from "./ListItem"
 export default function QuoteList({quote, subtasks, selected, setSelected}) {
     const [show, setShow] = useState(false)
 
+    // **** HANDLE CHECKBOX CHANGE ****
     const checkOnChange = (e, thisQuote) => {
         if(e.target.checked) {
             setSelected([...selected, thisQuote])  

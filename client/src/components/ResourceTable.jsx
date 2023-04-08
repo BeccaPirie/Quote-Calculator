@@ -3,13 +3,9 @@ import { IconButton, Tooltip } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 
-export default function ResourceTable({resources, setResources, setNewResource, setBtnText}) {
+export default function ResourceTable({resources, setResources}) {
 
-    const editResource = (resource, index) => {
-        setNewResource(resource)
-        setBtnText('Save')
-    }
-
+    // **** REMOVE RESOURCE ****
     const deleteResource = (index) => {
         setResources(resources.filter((_, j) => j !== index))
     }
@@ -37,11 +33,6 @@ export default function ResourceTable({resources, setResources, setNewResource, 
                         <td>{`${resource.time} hours`}</td>
                     </>}
                     <td>
-                        <Tooltip title="Edit">
-                            <IconButton aria-label="edit" onClick={() => editResource(resource, index)}>
-                                <EditIcon />
-                            </IconButton>
-                        </Tooltip>
                         <Tooltip title="Delete">
                             <IconButton aria-label="delete" onClick={() => deleteResource(index)}>
                                 <DeleteIcon />
