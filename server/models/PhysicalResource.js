@@ -16,6 +16,10 @@ const PhysicalResourceSchema = new mongoose.Schema({
         enum: ['One-off Payment', 'Weekly Payments', 'Monthly Payments'],
         required: true
     },
+
+    time: {
+        type: Number,
+    },
     
     cost: {
         type: Number,

@@ -34,6 +34,22 @@ export default function PhysicalResource({resource, setResource}) {
                 </RadioGroup>
             </FormControl>
 
+            {resource.costType !== "One-off Payment" &&
+                <div className="input-container">
+                    <TextField
+                        id="time"
+                        label="Length of Time"
+                        inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+                        required
+                        InputProps={{
+                            endAdornment:<InputAdornment position="end">{resource.costType === "Monthly Payments" ? "Months" : "Weeks"}</InputAdornment>
+                        }}
+                        value={resource.time || ''}
+                        onChange={(e) => setResource({...resource, time: e.target.value})}
+                    />
+                </div>
+            }
+
             <div className="input-container">
                 <TextField
                     id="cost"

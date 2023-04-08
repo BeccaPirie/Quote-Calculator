@@ -40,7 +40,12 @@ export const calculateQuote = async(obj) => {
 
     // calculate total of physical resources
     const pr = physicalResources.reduce(function (total, obj) {
-        return total + parseInt(obj.cost) // FIXME
+        let cost = parseInt(obj.cost)
+        // multiply by number of payments if not one-off
+        if(obj.costType !== "One-off Payment") {
+            cost *= parseInt(obj.time)
+        }
+        return total + cost
     }, 0)
 
     // then, add up and return cost of all resources
