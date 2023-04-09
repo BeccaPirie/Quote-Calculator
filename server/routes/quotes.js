@@ -1,13 +1,15 @@
 import express from 'express';
 import quoteCtrl from '../controllers/quoteCtrl.js';
+import protect from '../middleware/auth.js';
 
 const router = express.Router()
 
-router.get('/user-quotes/:id', quoteCtrl.getUsersQuotes)
-router.get('/quote/:id/:quoteId', quoteCtrl.getQuote)
+router.get('/user-quotes/:id', protect, quoteCtrl.getUsersQuotes)
+router.get('/quote/:id/:quoteId', protect, quoteCtrl.getQuote)
 router.post('/calc-quote', quoteCtrl.calcQuote)
-router.post('/add/:id', quoteCtrl.addQuote)
-router.put('/update/:id/:quoteId', quoteCtrl.updateQuote)
-router.delete('/delete/:id/:quoteId', quoteCtrl.deleteQuote)
+router.post('/add/:id', protect, quoteCtrl.addQuote)
+router.put('/update/:id/:quoteId', protect, quoteCtrl.updateQuote)
+router.delete('/delete/:id/:quoteId', protect, quoteCtrl.deleteQuote)
+router.post('/combine/:id', protect, quoteCtrl.combineQuotes)
 
 export default router;

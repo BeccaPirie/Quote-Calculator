@@ -18,6 +18,7 @@ export default function Admin() {
     useEffect(() => {
         const fetchPaygrades = async() => {
             try {
+                if(!user.isAdmin) throw new Error("Not authorised")
                 const res = await axios.get('http://localhost:8000/api/paygrades/')
                 setJunior(res.data.find(data => data.type === "Junior"))
                 setStandard(res.data.find(data => data.type === "Standard"))
@@ -32,7 +33,9 @@ export default function Admin() {
     // *** UPDATE PAYGRADE ***
     const updatePaygrades = async(paygrade) => {
         try {
-            await axios.put(`http://localhost:8000/api/paygrades/update/${user._id}`, paygrade)
+            await axios.put(`http://localhost:8000/api/paygrades/update/${user._id}`, paygrade, {
+                headers: {authorization:'Bearer ' + user.token}
+            })
             displayAlert()
         } catch (err) {
             console.error(err.response.data)

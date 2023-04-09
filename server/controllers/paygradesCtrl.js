@@ -1,5 +1,6 @@
 import User from "../models/User.js";
 import Paygrades from "../models/Paygrades.js";
+import protect from '../middleware/auth.js'
 
 const getPaygrades = async(req, res) => {
     try {
@@ -14,6 +15,7 @@ const addPaygrade = async (req, res) => {
     try {
         // validate user is admin
         const user = await User.findById(req.params.id)
+        if(user._id.toString() !== req.user._id.toString()) return res.status(404).json("Not authorised")
         if(!user.isAdmin) return res.status(404).json("User not granted permission")
 
         const newPaygrade = new Paygrades(req.body)

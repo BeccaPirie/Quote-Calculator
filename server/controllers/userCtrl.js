@@ -2,13 +2,10 @@ import User from '../models/User.js';
 import bcrypt from 'bcrypt'
 import EmailValidator from 'email-validator'
 
-const getUser = async(req, res) => {
-
-}
-
 const updateUser = async(req, res) => {
     try {
         const currentUser = await User.findById(req.params.id)
+        if(currentUser._id.toString() !== req.user._id.toString()) return res.status(404).json("Not authorised")
         
         // if email is changed, check it is valid and that it's not already in use
         if(currentUser.email !== req.body.email) {
@@ -35,6 +32,8 @@ const updatePassword = async(req, res) => {
     try {
         // check if old password is correct
         const currentUser = await User.findById(req.params.id)
+        if(currentUser._id.toString() !== req.user._id.toString()) return res.status(404).json("Not authorised")
+
         const password = await bcrypt.compare(req.body.oldPassword, currentUser.password)
         if(!password) return res.status(400).json("Incorrect password")
 
@@ -62,6 +61,9 @@ const updatePassword = async(req, res) => {
 
 const deleteUser = async(req, res) => {
     try {
+        const user = await User.findById(req.params.id)
+        if(user._id.toString() !== req.user._id.toString()) return res.status(404).json("Not authorised")
+        
         await User.findByIdAndDelete(req.params.id)
         res.status(200).json("User deleted")
     } catch (err) {
@@ -70,5 +72,5 @@ const deleteUser = async(req, res) => {
 }
 
 export default {
-    getUser, updateUser, updatePassword, deleteUser
+    updateUser, updatePassword, deleteUser
 }

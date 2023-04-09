@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken'
-const User = require('../models/User.js');
+import User from "../models/User.js";
+import config from '../config.js'
 
 // verify jwt
 const protect = async (req, res, next) => {
@@ -10,7 +11,7 @@ const protect = async (req, res, next) => {
             token = req.headers.authorization.split(' ')[1]
             
             // verify token
-            jwt.verify(token, process.env.JWT_SECRET, async(err, decoded) => {
+            jwt.verify(token, config.jwtSecret, async(err, decoded) => {
                 if(err) {
                     console.error(err)
                 }

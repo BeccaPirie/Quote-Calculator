@@ -49,5 +49,7 @@ export const calculateQuote = async(obj) => {
     }, 0)
 
     // then, add up and return cost of all resources
-    return (hr + pr).toFixed(2)
+    const total = (hr + pr).toFixed(2)
+    console.log(total)
+    return total
 }

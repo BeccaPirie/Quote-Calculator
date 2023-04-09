@@ -39,12 +39,14 @@ export default function Home() {
     useEffect(() => {
         const fetchQuote = async() => {
             if(quoteId) {
-                const res = await axios.get(`http://localhost:8000/api/quotes/quote/${user._id}/${quoteId}`)
+                const res = await axios.get(`http://localhost:8000/api/quotes/quote/${user._id}/${quoteId}`, {
+                    headers: {authorization:'Bearer ' + user.token}
+                })
                 setResources(res.data.humanResources.concat(res.data.physicalResources))
             }
         }
         fetchQuote()
-    }, [user._id, quoteId, quotes])
+    }, [user, quoteId, quotes])
 
     // *** TIMEOUT FUNCTION FOR DISPLAYING ALERT ***
     const displayAlert = (alertText) => {

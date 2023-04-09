@@ -26,18 +26,31 @@ export default function Quote({total, resources, displayAlert}) {
     const [quoteName, setQuoteName] = useState('')
     const { quotes, dispatch: quotesDispatch } = useContext(QuoteContext)
     const quoteId = useParams().id
+    const [mainQuotes, setMainQuotes] = useState([])
 
     // *** FETCH QUOTE IF ID PARAM ***
     useEffect(() => {
         const fetchQuote = async() => {
             if(quoteId) {
-                const res = await axios.get(`http://localhost:8000/api/quotes/quote/${user._id}/${quoteId}`)
+                const res = await axios.get(`http://localhost:8000/api/quotes/quote/${user._id}/${quoteId}`, {
+                    headers: {authorization:'Bearer ' + user.token}
+                })
                 setQuoteName(res.data.name)
                 setSelectQuote(res.data.mainTaskId)
             }
         }
         fetchQuote()
     }, [user._id, quoteId])
+
+    useEffect(() => {
+        const fetchMainQuotes = async() => {
+            if(quotes.length > 0) {
+                const filter = quotes.filter(q => q.mainTaskId === '')
+                setMainQuotes(filter)
+            }
+        }
+        fetchMainQuotes()
+    }, user._id)
 
     // ***** HANDLE SAVE BUTTON CLICK *****
     const saveQuoteClick = () => {
@@ -80,12 +93,17 @@ export default function Quote({total, resources, displayAlert}) {
             }
             // save updated quote
             if(quoteId) {
-                await axios.put(`http://localhost:8000/api/quotes/update/${user._id}/${quoteId}`, newQuote)
+                await axios.put(`http://localhost:8000/api/quotes/update/${user._id}/${quoteId}`, newQuote, {
+                    headers: {authorization:'Bearer ' + user.token}
+                })
                 quotesDispatch({type:"UPDATE_QUOTE", payload: newQuote})
             }
             // or add as new if not editing an existing quote
             else {
-                await axios.post(`http://localhost:8000/api/quotes/add/${user._id}`, newQuote)
+                console.log("adding new quote")
+                await axios.post(`http://localhost:8000/api/quotes/add/${user._id}`, newQuote, {
+                    headers: {authorization:'Bearer ' + user.token}
+                })
                 quotesDispatch({type:"ADD_QUOTE", payload: newQuote})
             }
 
@@ -171,8 +189,7 @@ export default function Quote({total, resources, displayAlert}) {
                                 onChange={(e) => setSelectQuote(e.target.value)}
                             >
                                 <MenuItem value=''>New</MenuItem>
-                                {quotes.length > 0 && quotes.map((quote) => {
-                                    if(quote.mainTaskId !== '') return
+                                {mainQuotes.length > 0 && mainQuotes.map((quote) => {
                                     return <MenuItem key={quote._id}  value={quote._id}>{quote.name}</MenuItem>
                                 })}
                             </Select>
