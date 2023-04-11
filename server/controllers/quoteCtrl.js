@@ -55,6 +55,10 @@ const addQuote = async(req, res) => {
             ...req.body
         })
         await newQuote.save()
+
+        // TODO, if quote added has mainTaskId, add quote to total of main tasks
+        // if main task, add to total
+
         res.json("Quote added")
     } catch (err) {
         res.status(500).json(err)
@@ -67,6 +71,9 @@ const updateQuote = async(req, res) => {
         if(user._id.toString() !== req.user._id.toString()) return res.status(404).json("Not authorised")
 
         await Quotes.findByIdAndUpdate(req.params.quoteId, {$set: req.body})
+
+        // TODO recalculate total quote
+
         res.json("Quote updated")
     } catch (err) {
         res.status(500).json(err)
@@ -99,34 +106,7 @@ const combineQuotes = async(req, res) => {
             }
         })
 
-        let name = quotes[0].name
-        for(let i = 1; i < quotes.length-1; i++) {
-            name = name + ', ' + quotes[i].name
-        }
-
-        let sum = quotes.reduce(function (total, obj) {
-            total + obj.quote
-        })
-
-        let pr = quotes[0].physicalResources
-        for(let i = 1; i < quotes.length-1; i++) {
-            pr = pr.concat(quotes[i].physicalResources)
-        }
-
-        let hr = quotes[0].humanResources
-        for(let i = 1; i < quotes.length-1; i++) {
-            hr = hr.concat(quotes[i].humanResources)
-        }
-
-        const combine = new Quotes({
-            userId: req.params.id,
-            name: name,
-            quote: sum,
-            physicalResources: pr,
-            humanResources: hr,
-        })
-
-        combine.save()
+        // TODO COMPLETE
 
         res.json("Quotes combined")
     } catch (err) {

@@ -7,6 +7,7 @@ import { useContext } from 'react'
 export default function ProfileMenu({setShowMenu}) {
     const {dispatch } = useContext(UserContext)
 
+    // *** LOGOUT FUNCTIONALITY ***
     const logout = () => {
         setShowMenu(false)
         dispatch({type:"LOGOUT"})

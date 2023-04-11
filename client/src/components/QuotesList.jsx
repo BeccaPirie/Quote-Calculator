@@ -1,7 +1,7 @@
 import { List} from '@mui/material'
 import { useState } from 'react'
 import Collapse from "@mui/material/Collapse"
-import QuoteItem from "./ListItem"
+import QuoteItem from "./QuoteItem"
 
 export default function QuoteList({quote, subtasks, selected, setSelected}) {
     const [show, setShow] = useState(false)

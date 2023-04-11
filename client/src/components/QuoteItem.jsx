@@ -7,7 +7,7 @@ import { QuoteContext } from "../context/quotes/QuoteContext"
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 
 export default function QuoteItem({quote, checkOnChange, subtask, show, setShow}) {
     const { user } = useContext(UserContext)
@@ -34,6 +34,7 @@ export default function QuoteItem({quote, checkOnChange, subtask, show, setShow}
     return (
         <ListItem secondaryAction={
             <>
+                {!subtask && <b>£{quote.total}</b>}
                 <Tooltip title="Edit">
                     <IconButton edge="end" aria-label="edit" onClick={() => editQuote(quote)}>
                         <EditIcon />
@@ -66,8 +67,7 @@ export default function QuoteItem({quote, checkOnChange, subtask, show, setShow}
                     />
                 </ListItemIcon>
             </ListItemAvatar>}
-
-            <ListItemText primary={`${quote.name} - £${quote.quote}`}/>
+            <ListItemText primary={`${quote.name}: £${quote.quote}`}/>
         </ListItem>
     )
 }

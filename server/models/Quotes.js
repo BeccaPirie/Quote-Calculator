@@ -29,6 +29,11 @@ const QuoteSchema = new mongoose.Schema({
 
     mainTaskId: {
         type: String
+    },
+
+    total: {
+        type: String,
+        default:0.00
     }
 })
 
