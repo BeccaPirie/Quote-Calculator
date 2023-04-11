@@ -1,7 +1,7 @@
 import { TextField, InputLabel, InputAdornment, Alert } from '@mui/material'
 import { useState, useEffect, useContext } from 'react'
 import Navbar from '../components/Navbar'
-import { Button } from '../components/styles/button.styled'
+import { ButtonStyled } from '../components/styles/button.styled'
 import { AdminStyled } from '../components/styles/admin.styled'
 import { AlertStyled } from '../components/styles/alert.styled'
 import axios from 'axios'
@@ -72,7 +72,7 @@ export default function Admin() {
                     InputProps={{
                         startAdornment:<InputAdornment position="start">£</InputAdornment>
                     }}/>
-                <Button type="submit" onClick={() => updatePaygrades(junior)}>Update</Button>
+                <ButtonStyled type="submit" onClick={() => updatePaygrades(junior)}>Update</ButtonStyled>
             
                 <InputLabel htmlFor="standard">
                     Standard
@@ -84,7 +84,7 @@ export default function Admin() {
                     InputProps={{
                         startAdornment:<InputAdornment position="start">£</InputAdornment>
                     }}/>
-                <Button type="submit" onClick={() => updatePaygrades(standard)}>Update</Button>
+                <ButtonStyled type="submit" onClick={() => updatePaygrades(standard)}>Update</ButtonStyled>
 
                 <InputLabel htmlFor="senior">
                     Senior
@@ -96,7 +96,7 @@ export default function Admin() {
                     InputProps={{
                         startAdornment:<InputAdornment position="start">£</InputAdornment>
                     }}/>
-                <Button type="submit" onClick={() => updatePaygrades(junior)}>Update</Button>
+                <ButtonStyled type="submit" onClick={() => updatePaygrades(junior)}>Update</ButtonStyled>
             </AdminStyled>
         </>
     )

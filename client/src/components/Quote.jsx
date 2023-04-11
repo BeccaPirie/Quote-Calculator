@@ -14,6 +14,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import axios from 'axios'
 import { QuoteContext } from '../context/quotes/QuoteContext'
+import { ButtonStyled } from './styles/button.styled';
 
 export default function Quote({total, resources, displayAlert}) {
     const { user, dispatch } = useContext(UserContext)
@@ -129,7 +130,7 @@ export default function Quote({total, resources, displayAlert}) {
                 resources combined.
             </div>
 
-            <Button onClick={saveQuoteClick}>Save Quote</Button>          
+            <ButtonStyled className="save-quote-btn" onClick={saveQuoteClick}>Save Quote</ButtonStyled>          
 
             <Dialog open={loginDialog} onClose={() => setLoginDialog(false)}>              
                 <DialogTitle>Login</DialogTitle>

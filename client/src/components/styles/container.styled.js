@@ -20,4 +20,14 @@ h3 {
         background-color: #f0cb46;
     }
 }
+
+.info {
+    width: 95%;
+    margin: auto;
+}
+
+.save-quote-btn {
+    margin: 25px 50px;
+    float: right;
+}
 `

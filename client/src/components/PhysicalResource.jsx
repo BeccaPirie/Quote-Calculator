@@ -34,7 +34,7 @@ export default function PhysicalResource({resource, setResource}) {
                 </RadioGroup>
             </FormControl>
 
-            {resource.costType !== "One-off Payment" &&
+            {(resource.costType === "Weekly Payments" || resource.costType === "Monthly Payments") &&
                 <div className="input-container">
                     <TextField
                         id="time"

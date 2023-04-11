@@ -4,7 +4,7 @@ import Navbar from "../components/Navbar"
 import PhysicalResource from "../components/PhysicalResource"
 import HumanResource from "../components/HumanResource"
 import ResourceTable from "../components/ResourceTable"
-import { Button } from "../components/styles/button.styled"
+import { ButtonStyled } from "../components/styles/button.styled"
 import { Container } from "../components/styles/container.styled"
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
@@ -153,24 +153,24 @@ export default function Home() {
                     </Box>
 
                     <Collapse in={openForm && newResource.type !== undefined} timeout="auto">
-                        <div className="resource-form">
+                        <div className={newResource.type === resourceTypes[0] ? "resource-form pr-form" : "resource-form"}>
                             {newResource.type === resourceTypes[0] && <PhysicalResource resource={newResource} setResource={setNewResource}/>}
                             {newResource.type === resourceTypes[1] && <HumanResource resource={newResource} setResource={setNewResource}/>}
                         </div>
-                        <Button type="submit">Add</Button>
+                        <ButtonStyled type="submit">Add</ButtonStyled>
                     </Collapse>
                 </ResourceForm>
 
                 {resources.length > 0 && <ResourceTable resources={resources} setResources={setResources}/>}
 
                 <ButtonGroup className="btn-container" variant="contained">
-                    <Button onClick={() => calculateQuote(true)}>Calculate Quote</Button>
+                    <ButtonStyled onClick={() => calculateQuote(true)}>Calculate Quote</ButtonStyled>
                     {(user && user.isAdmin) && 
-                    <Button className="admin" onClick={() => calculateQuote(false)}>Calculate Quote Without Fudge Factor</Button>
+                    <ButtonStyled className="admin" onClick={() => calculateQuote(false)}>Calculate Quote Without Fudge Factor</ButtonStyled>
                     }
                 </ButtonGroup>
 
-                <Button onClick={() =>clearQuote()}>Clear All</Button>
+                <ButtonStyled onClick={() =>clearQuote()}>Clear All</ButtonStyled>
 
                 {showBudget &&
                 <Quote

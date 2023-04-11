@@ -1,36 +1,17 @@
 const UserReducer = (state, action) => {
     switch (action.type) {
-        case "LOGIN_START":
-            return {
-                user: null,
-                isFetching: true,
-                error: false
-            }
-
             case "LOGIN_SUCCESS":
             return {
-                user: action.payload,
-                isFetching: false,
-                error: false
-            }
-
-            case "LOGIN_FAIL":
-            return {
-                user: null,
-                isFetching: false,
-                error: action.payload
+                user: action.payload
             }
 
             case "LOGOUT":
             return {
-                user: null,
-                isFetching: false,
-                error: false
+                user: null
             }
 
             case "UPDATE_USER":
             return {
-                ...state,
                 user: action.payload
             }
 

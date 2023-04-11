@@ -2,9 +2,7 @@ import { createContext, useReducer, useEffect } from 'react'
 import UserReducer from './UserReducer'
 
 const INITIAL_STATE = {
-    user: JSON.parse(localStorage.getItem('QuoteAppUser')) || null,
-    isFetching: false,
-    error: false
+    user: JSON.parse(localStorage.getItem('QuoteAppUser')) || null
 }
 
 export const UserContext = createContext(INITIAL_STATE)
@@ -20,8 +18,6 @@ export const UserContextProvider = ({children}) => {
         <UserContext.Provider
             value={{
                 user:state.user,
-                isFetching:state.isFetching,
-                error:state.error,
                 dispatch
             }}>
                 {children}

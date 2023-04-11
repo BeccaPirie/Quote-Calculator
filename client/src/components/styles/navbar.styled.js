@@ -26,7 +26,7 @@ align-items: center;
         padding-left: 0;
     }
 
-    a li {
+    li {
         align-items: center;
         height: 35px;
         width: 60px;
@@ -36,6 +36,7 @@ align-items: center;
         border-radius: 20px;
         border: 2px solid #fff;
         text-align: center;
+        cursor: pointer;
     }
 }
 
@@ -43,5 +44,28 @@ a {
     text-decoration: none;
     // cursor: default;
     color: #fff;
+}
+
+.menu-list {
+    position: absolute;
+    top: 50px;
+    right: 20px;
+    z-index: 100;
+
+    ul {
+        display: block;
+        padding: 0;
+    }
+
+    li {
+        padding: 8px 40px;
+        border-radius: 0;
+        width: 100%;
+        margin: 0;
+    }
+
+    a {
+        color: #000;
+    }
 }
 `

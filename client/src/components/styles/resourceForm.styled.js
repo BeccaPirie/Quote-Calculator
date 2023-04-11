@@ -17,9 +17,17 @@ display: block;
     }
 }
 
+.expand {
+    cursor: pointer;
+}
+
 .resource-form {
     padding: 20px;
-    height: 40vh;
+    height: 30vh;
+}
+
+.pr-form {
+    height: 50vh;
 }
 
 #resource-type-select, #pay-grade-select {
