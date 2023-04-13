@@ -16,7 +16,10 @@ app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
-mongoose.connect(MONGODB_URI)
+// mongoose.connect(MONGODB_URI)
+mongoose.set("strictQuery", false)
+mongoose.connect(MONGODB_URI,
+    {useNewUrlParser: true, useUnifiedTopology: true})
 
 app.use('/api/auth', authRoute)
 app.use('/api/user', userRoute)
