@@ -19,7 +19,7 @@ export default function Admin() {
         const fetchPaygrades = async() => {
             try {
                 if(!user.isAdmin) throw new Error("Not authorised")
-                const res = await axios.get('https://quote-calculator-api.onrender.com/api/api/paygrades/')
+                const res = await axios.get('https://quote-calculator-api.onrender.com/api/paygrades/')
                 setJunior(res.data.find(data => data.type === "Junior"))
                 setStandard(res.data.find(data => data.type === "Standard"))
                 setSenior(res.data.find(data => data.type === "Senior"))
