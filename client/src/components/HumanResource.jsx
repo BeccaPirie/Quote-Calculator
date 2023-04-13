@@ -14,7 +14,7 @@ export default function HumanResource({resource, setResource}) {
     // fetch paygrades
     useEffect(() => {
         const fetchPaygrades = async() => {
-            const res = await axios.get('http://localhost:8000/api/paygrades/')
+            const res = await axios.get('/paygrades/')
             setPaygrades(res.data)
         }
         fetchPaygrades()

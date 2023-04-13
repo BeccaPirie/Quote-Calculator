@@ -33,7 +33,7 @@ export default function Admin() {
     // *** UPDATE PAYGRADE ***
     const updatePaygrades = async(paygrade) => {
         try {
-            await axios.put(`http://localhost:8000/api/paygrades/update/${user._id}`, paygrade, {
+            await axios.put(`/paygrades/update/${user._id}`, paygrade, {
                 headers: {authorization:'Bearer ' + user.token}
             })
             displayAlert()

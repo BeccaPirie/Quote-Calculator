@@ -33,7 +33,7 @@ export default function Quote({total, resources, displayAlert}) {
     useEffect(() => {
         const fetchQuote = async() => {
             if(quoteId) {
-                const res = await axios.get(`http://localhost:8000/api/quotes/quote/${user._id}/${quoteId}`, {
+                const res = await axios.get(`/quotes/quote/${user._id}/${quoteId}`, {
                     headers: {authorization:'Bearer ' + user.token}
                 })
                 setQuoteName(res.data.name)
@@ -69,7 +69,7 @@ export default function Quote({total, resources, displayAlert}) {
 
         // login user
         try {
-            const res = await axios.post("http://localhost:8000/api/auth/login", credentials)
+            const res = await axios.post("/auth/login", credentials)
             dispatch({ type: "LOGIN_SUCCESS", payload: res.data})
 
             setError(false)
@@ -95,7 +95,7 @@ export default function Quote({total, resources, displayAlert}) {
 
             // save updated main quote
             if(quoteId && selectQuote === '') {
-                const res = await axios.put(`http://localhost:8000/api/quotes/update/${user._id}/${quoteId}`, newQuote, {
+                const res = await axios.put(`/quotes/update/${user._id}/${quoteId}`, newQuote, {
                     headers: {authorization:'Bearer ' + user.token}
                 })
                 quotesDispatch({type:"UPDATE_QUOTE", payload: {...newQuote, total:res.data, _id: quoteId}})
@@ -103,7 +103,7 @@ export default function Quote({total, resources, displayAlert}) {
 
             // save updated subtask and main quote
             else if(quoteId && selectQuote !== '') {
-                const res = await axios.put(`http://localhost:8000/api/quotes/update-subtask/${user._id}/${quoteId}`, newQuote, {
+                const res = await axios.put(`/quotes/update-subtask/${user._id}/${quoteId}`, newQuote, {
                     headers: {authorization:'Bearer ' + user.token}
                 })
                 // update subtask context
@@ -114,7 +114,7 @@ export default function Quote({total, resources, displayAlert}) {
 
             // or add as new if not editing an existing quote
             else {
-                const res = await axios.post(`http://localhost:8000/api/quotes/add/${user._id}`, newQuote, {
+                const res = await axios.post(`/quotes/add/${user._id}`, newQuote, {
                     headers: {authorization:'Bearer ' + user.token}
                 })
                 quotesDispatch({type:"ADD_QUOTE", payload: res.data.quote})

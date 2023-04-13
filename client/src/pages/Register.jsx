@@ -43,7 +43,7 @@ export default function Register() {
         }
 
         try {
-            await axios.post('http://localhost:8000/api/auth/signup', user)
+            await axios.post('/auth/signup', user)
             setAlertText('')
             navigate('/login')
         } catch (err) {

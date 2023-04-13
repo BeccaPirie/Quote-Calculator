@@ -39,7 +39,7 @@ export default function Home() {
     useEffect(() => {
         const fetchQuote = async() => {
             if(quoteId) {
-                const res = await axios.get(`http://localhost:8000/api/quotes/quote/${user._id}/${quoteId}`, {
+                const res = await axios.get(`/quotes/quote/${user._id}/${quoteId}`, {
                     headers: {authorization:'Bearer ' + user.token}
                 })
                 setResources(res.data.humanResources.concat(res.data.physicalResources))
@@ -96,7 +96,7 @@ export default function Home() {
         }
 
         try {
-            const res = await axios.post(`http://localhost:8000/api/quotes/calc-quote`, resourcesObj)
+            const res = await axios.post(`/quotes/calc-quote`, resourcesObj)
             setQuoteTotal(res.data)
         } catch (err) {
             console.error(err.response.data)
