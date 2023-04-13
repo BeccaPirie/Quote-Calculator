@@ -13,6 +13,11 @@ export const UpdateQuote = (quote) => ({
     payload: quote
 })
 
+export const UpdateTotal = (quote) => ({
+    type: "UPDATE_TOTAL",
+    payload: quote
+})
+
 export const DeleteQuote = (id) => ({
     type: "DELETE_QUOTE",
     payload: id

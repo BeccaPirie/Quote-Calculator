@@ -9,6 +9,7 @@ router.get('/quote/:id/:quoteId', protect, quoteCtrl.getQuote)
 router.post('/calc-quote', quoteCtrl.calcQuote)
 router.post('/add/:id', protect, quoteCtrl.addQuote)
 router.put('/update/:id/:quoteId', protect, quoteCtrl.updateQuote)
+router.put('/update-subtask/:id/:quoteId', protect, quoteCtrl.updateSubtask)
 router.delete('/delete/:id/:quoteId', protect, quoteCtrl.deleteQuote)
 router.post('/combine/:id', protect, quoteCtrl.combineQuotes)
 

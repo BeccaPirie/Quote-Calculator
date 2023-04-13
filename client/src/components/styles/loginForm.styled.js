@@ -2,12 +2,13 @@ import styled from "styled-components"
 
 export const LoginForm = styled.div`
 width: 400px;
-height: 400px;
+min-height: 400px;
 margin: 10vh auto 0;
 background-color: #34495e;
 color: #ebebeb;
 text-align: center;
-padding-top: 50px;
+padding: 30px;
+padding-top: 20px;
 
 h2 {
     margin-bottom: 5px;

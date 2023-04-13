@@ -32,8 +32,8 @@ const QuoteSchema = new mongoose.Schema({
     },
 
     total: {
-        type: String,
-        default:0.00
+        type: Number,
+        default:0
     }
 })
 

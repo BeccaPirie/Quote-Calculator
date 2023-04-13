@@ -29,6 +29,10 @@ export default function Quotes() {
         fetchMainTasks()
     }, [quotes, user._id])
 
+    useEffect(() => {
+        console.log(quotes)
+    }, [quotes])
+
     return(
         <>
             <Navbar />

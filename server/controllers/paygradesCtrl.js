@@ -1,6 +1,5 @@
 import User from "../models/User.js";
 import Paygrades from "../models/Paygrades.js";
-import protect from '../middleware/auth.js'
 
 const getPaygrades = async(req, res) => {
     try {

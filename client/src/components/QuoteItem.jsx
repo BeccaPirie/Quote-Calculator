@@ -4,15 +4,17 @@ import EditIcon from '@mui/icons-material/Edit'
 import { useContext } from 'react'
 import { UserContext } from "../context/user/UserContext"
 import { QuoteContext } from "../context/quotes/QuoteContext"
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
+import ExpandLess from '@mui/icons-material/ExpandLess'
+import ExpandMore from '@mui/icons-material/ExpandMore'
 import axios from 'axios'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 export default function QuoteItem({quote, checkOnChange, subtask, show, setShow}) {
     const { user } = useContext(UserContext)
     const { dispatch } = useContext(QuoteContext)
     const navigate = useNavigate()
+    const viewport = useMediaQuery('(min-width:600px)');
 
     // *** NAVIGATE TO HOME PAGE TO EDIT QUOTE ***
     const editQuote = (quote) => {
@@ -22,7 +24,7 @@ export default function QuoteItem({quote, checkOnChange, subtask, show, setShow}
     // ***** DELETE QUOTE *****
     const deleteQuote = async(quote) => {
         try {
-            await axios.delete(`http://localhost:8000/api/quotes/delete/${user._id}/${quote._id}`, {
+            const res = await axios.delete(`http://localhost:8000/api/quotes/delete/${user._id}/${quote._id}`, {
                 headers: {authorization:'Bearer ' + user.token}
             })
             dispatch({type: "DELETE_QUOTE", payload: quote._id})
@@ -67,7 +69,7 @@ export default function QuoteItem({quote, checkOnChange, subtask, show, setShow}
                     />
                 </ListItemIcon>
             </ListItemAvatar>}
-            <ListItemText primary={`${quote.name}: £${quote.quote}`}/>
+            <ListItemText primary={viewport ? `${quote.name}: £${quote.quote}` : `${quote.name}`}/>
         </ListItem>
     )
 }

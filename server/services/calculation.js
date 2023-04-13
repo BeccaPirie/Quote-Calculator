@@ -1,7 +1,6 @@
 import Paygrades from "../models/Paygrades.js";
 
 export const calculateQuote = async(obj) => {
-
     // first, split resources by type
     const humanResources = obj.resources.filter(resource => resource.type === "Human Resource")
     const physicalResources = obj.resources.filter(resource => resource.type === "Physical Resource")
@@ -35,7 +34,7 @@ export const calculateQuote = async(obj) => {
     
     // if no physical resources, return hr
     if(physicalResources.length === 0) {
-        return hr
+        return Math.round(hr)
     }
 
     // calculate total of physical resources
@@ -49,7 +48,6 @@ export const calculateQuote = async(obj) => {
     }, 0)
 
     // then, add up and return cost of all resources
-    const total = (hr + pr).toFixed(2)
-    console.log(total)
+    const total = Math.round(hr + pr)
     return total
 }

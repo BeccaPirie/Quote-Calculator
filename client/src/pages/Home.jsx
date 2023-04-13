@@ -66,7 +66,6 @@ export default function Home() {
     // *** RESOURCE FORM SUBMIT ***
     const onSubmit = (e) => {
         e.preventDefault()
-        console.log(newResource)
         // TODO form validation
         if(newResource.type === resourceTypes[1]) {
             if (newResource.workers < 1) {

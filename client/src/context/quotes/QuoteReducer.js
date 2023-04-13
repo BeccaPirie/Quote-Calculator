@@ -16,6 +16,12 @@ const QuotesReducer = (state, action) => {
                     action.payload : quote)
             }
 
+        case "UPDATE_TOTAL":
+            return {
+                quotes: state.quotes.map(quote => quote._id === action.payload.id ?
+                    {...quote, total: action.payload.total} : quote)
+            }
+
         case "DELETE_QUOTE":
             return {
                 quotes: state.quotes.filter(quote => quote._id !== action.payload)

@@ -51,7 +51,7 @@ export default function Quote({total, resources, displayAlert}) {
             }
         }
         fetchMainQuotes()
-    }, user._id)
+    }, [user._id])
 
     // ***** HANDLE SAVE BUTTON CLICK *****
     const saveQuoteClick = () => {
@@ -92,20 +92,36 @@ export default function Quote({total, resources, displayAlert}) {
                 humanResources: resources.filter(resource => resource.type === 'Human Resource'),
                 mainTaskId: selectQuote || ''
             }
-            // save updated quote
-            if(quoteId) {
-                await axios.put(`http://localhost:8000/api/quotes/update/${user._id}/${quoteId}`, newQuote, {
+
+            // save updated main quote
+            if(quoteId && selectQuote === '') {
+                const res = await axios.put(`http://localhost:8000/api/quotes/update/${user._id}/${quoteId}`, newQuote, {
                     headers: {authorization:'Bearer ' + user.token}
                 })
-                quotesDispatch({type:"UPDATE_QUOTE", payload: newQuote})
+                quotesDispatch({type:"UPDATE_QUOTE", payload: {...newQuote, total:res.data, _id: quoteId}})
             }
+
+            // save updated subtask and main quote
+            else if(quoteId && selectQuote !== '') {
+                const res = await axios.put(`http://localhost:8000/api/quotes/update-subtask/${user._id}/${quoteId}`, newQuote, {
+                    headers: {authorization:'Bearer ' + user.token}
+                })
+                // update subtask context
+                quotesDispatch({type:"UPDATE_QUOTE", payload: {...newQuote, _id: quoteId}})
+                // update quote context with updated total
+                quotesDispatch({type:"UPDATE_TOTAL", payload: {id: selectQuote, total:res.data}})
+            }
+
             // or add as new if not editing an existing quote
             else {
-                console.log("adding new quote")
-                await axios.post(`http://localhost:8000/api/quotes/add/${user._id}`, newQuote, {
+                const res = await axios.post(`http://localhost:8000/api/quotes/add/${user._id}`, newQuote, {
                     headers: {authorization:'Bearer ' + user.token}
                 })
-                quotesDispatch({type:"ADD_QUOTE", payload: newQuote})
+                quotesDispatch({type:"ADD_QUOTE", payload: res.data.quote})
+                // update quote context with updated total if adding subtask
+                if(selectQuote !== '') {
+                    quotesDispatch({type:"UPDATE_TOTAL", payload: {id: selectQuote, total:res.data.total}})
+                }
             }
 
             setShowDialog(false)
@@ -177,7 +193,7 @@ export default function Quote({total, resources, displayAlert}) {
                         or select new quote
                     </DialogContentText>
 
-                    <FormControl>
+                    <FormControl style={{minWidth: 120}}>
                             <InputLabel id="quote-label">Quote</InputLabel>
                             <Select
                                 labelId="quote-label"

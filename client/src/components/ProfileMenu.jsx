@@ -22,7 +22,7 @@ export default function ProfileMenu({setShowMenu}) {
                     <Link to='/profile' onClick={()=> setShowMenu(false)}>
                         <MenuItem>Settings</MenuItem>
                     </Link>
-                    <Link to='/' onClick={logout}>
+                    <Link to='/login' onClick={logout}>
                         <MenuItem>Logout</MenuItem>
                     </Link>
                 </MenuList>

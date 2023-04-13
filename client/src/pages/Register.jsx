@@ -47,7 +47,7 @@ export default function Register() {
             setAlertText('')
             navigate('/login')
         } catch (err) {
-            console.err(err.response.data)
+            console.error(err.response.data)
             setAlertText("Error signing up")
         }
     }

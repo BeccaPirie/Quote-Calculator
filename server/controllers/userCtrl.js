@@ -2,6 +2,16 @@ import User from '../models/User.js';
 import bcrypt from 'bcrypt'
 import EmailValidator from 'email-validator'
 
+const getUser = async(req, res) => {
+    try {
+        const user = await User.findById(req.params.id)
+        if(user._id.toString() !== req.user._id.toString()) return res.status(404).json("Not authorised")
+        res.json(user)
+    } catch (err) {
+        res.status(500).json(err)
+    }
+}
+
 const updateUser = async(req, res) => {
     try {
         const currentUser = await User.findById(req.params.id)
@@ -72,5 +82,5 @@ const deleteUser = async(req, res) => {
 }
 
 export default {
-    updateUser, updatePassword, deleteUser
+    getUser, updateUser, updatePassword, deleteUser
 }

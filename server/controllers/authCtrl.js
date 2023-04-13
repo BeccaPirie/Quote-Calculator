@@ -32,13 +32,14 @@ const signUp = async(req, res) => {
             username: req.body.username,
             email: req.body.email,
             password: hashedPassword,
+            isAdmin: req.body.isAdmin || false
         })
 
         // save user
         const user = await createUser.save()
 
         // generate jwt token and update user
-        const token = generateToken(user._id)
+        const token = await generateToken(user._id)
 
         await user.updateOne({
             $set: {
@@ -76,7 +77,8 @@ const login = async(req, res) => {
             _id: loginUser._id,
             username: loginUser.username,
             email: loginUser.email,
-            token: token
+            token: token,
+            isAdmin: loginUser.isAdmin
         })
     } catch (err) {
         res.status(500).json(err)
