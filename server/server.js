@@ -16,7 +16,7 @@ app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
-await mongoose.connect("mongodb://127.0.0.1/quotes_database")
+await mongoose.connect(MONGODB_URI)
 
 app.use('/api/auth', authRoute)
 app.use('/api/user', userRoute)
