@@ -1,7 +1,0 @@
-  115  cd rebecca
-  116  cd cm4025_assessment-BeccaPirie
-  117  cd client
-  118  npm install
-  119  npm start
-  120  history
-  121  history > client.txt
