@@ -16,7 +16,7 @@ app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
-await mongoose.connect(MONGODB_URI)
+mongoose.connect(MONGODB_URI)
 
 app.use('/api/auth', authRoute)
 app.use('/api/user', userRoute)
