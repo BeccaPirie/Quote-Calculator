@@ -1,0 +1,154 @@
+    1  ip address
+    2  sudo echo "hello"
+    3  ip address
+    4  pwd
+    5  whoami
+    6  ls -al
+    7  cd Documents
+    8  cd home
+    9  pwd
+   10  echo > hello.txt
+   11  ls -al
+   12  ls hello.txt
+   13  hello.text cat
+   14  ls hello.text cat
+   15  cat hello.text
+   16  cat
+   17  cat hello.txt
+   18  echo hello.txt >> Hello Wally
+   19  cat hello.txt
+   20  echo "Hello Wally" >> hello.txt
+   21  cat hello.txt
+   22  echo "Hello Wally" > hello.txt
+   23  cat hello.txt
+   24  mkdir temp
+   25  ls
+   26  cp hello.txt hello2.txt
+   27  ls
+   28  mv hello2.txt temp
+   29  l
+   30  ls
+   31  rm -Rf temp
+   32  ls
+   33  history > myFirstHistory.txt
+   34  cat myFirstHistory.txt
+   35  ls | grep "Hello Wally"
+   36  ls | grep hello.txt
+   37  cd | grep hello.txt
+   38  grep "Hello Wally"
+   39  cd | grep "Hello Wally" 
+   40  ls | grep "Hello Wally"
+   41  grep "Hello WallY" /
+   42  grep "Hello Wally" /home
+   43  ls
+   44  grep -rl "Hello Wally" /
+   45  cd
+   46  cd CM4025-Enterprise-Web-Dev
+   47  cd client
+   48  npm start
+   49  sudo apt-get update
+   50  sudo apt-get install git-all
+   51  which git
+   52  git version
+   53  sudo apt-get install nodejs
+   54  which nodejs
+   55  sudo apt-get install npm
+   56  which npm
+   57  npm version
+   58  mkdir myWebsite
+   59  git clone https://github.com/BeccaPirie/CM4025-Enterprise-Web-Dev.git
+   60  git clone [200~https://github.com/BeccaPirie/CM4025-Enterprise-Web-Dev.git~
+   61  git clone https://github.com/BeccaPirie/CM4025-Enterprise-Web-Dev.git
+   62  ls
+   63  cd CM4025-Enterprise-Web-Dev
+   64  cd server
+   65  npm install
+   66  npm start
+   67  which git
+   68  git version
+   69  nodejs version
+   70  which nodejs
+   71  whoch npm
+   72  which npm
+   73  mkdir coursework
+   74  cd coursework
+   75  https://github.com/RobertGordonUniversity/cm4025_assessment-BeccaPirie.git
+   76  https://github.com/RobertGordonUniversity/cm4025_assessment-BeccaPirie
+   77  https://github.com/RobertGordonUniversity/cm4025_assessment-BeccaPirie.git
+   78  gh repo clone RobertGordonUniversity/cm4025_assessment-BeccaPirie
+   79  git clone https://github.com/RobertGordonUniversity/cm4025_assessment-BeccaPirie.git
+   80  cd coursework
+   81  git clone https://github.com/RobertGordonUniversity/cm4025_assessment-BeccaPirie.git
+   82  git version
+   83  git config --global user.name "BeccaPirie"
+   84  git config --global user.email "rebecca.l.pirie@gmail.com"
+   85  git config -l
+   86  git clone https://github.com/RobertGordonUniversity/cm4025_assessment-BeccaPirie.git
+   87  git config --local --unset credential.helper
+   88  git config --global --unset credential.helper
+   89  git clone https://github.com/RobertGordonUniversity/cm4025_assessment-BeccaPirie.git
+   90  cd server
+   91  cd cm4024_assessment-BeccaPirie
+   92  cd cm4025_assessment-BeccaPirie
+   93  cd server
+   94  npm install
+   95  nodemon start
+   96  node server.js
+   97  mkdir rebecca
+   98  cd rebecca
+   99  git clone https://github.com/RobertGordonUniversity/cm4025_assessment-BeccaPirie.git
+  100  cd server
+  101  npm install
+  102  cd server
+  103  cd cm4025_assessment-BeccaPirie
+  104  cd server
+  105  npm install
+  106  node server.js
+  107  history
+  108  history > server.txt
+  109  cd rebecca
+  110  cd cm4025_assessment-BeccaPirie
+  111  cd server
+  112  npm install
+  113  node server.js
+  114  history
+  115  cd rebecca
+  116  cd ..
+  117  cd rebecca
+  118  git clone [200~https://github.com/RobertGordonUniversity/cm4025_assessment-BeccaPirie.git
+  119  git add client.txt
+  120  cd rebecca
+  121  git add client.txt
+  122  cd cm2045_assessment-BeccaPirie
+  123  cd cm4025_assessment-BeccaPirie
+  124  git add client.txt server.txt
+  125  git add client/client.txt
+  126  git add server/server.txt
+  127  git commit -m "client and server scripts"
+  128  git push origin main
+  129  git add client.txt server.txt
+  130  git commit -m "move to main dir"
+  131  git push origin main
+  132  git add client.txt server.txt
+  133  git commit -m "move scripts"
+  134  git push origin main
+  135  cd rebecca
+  136  cd cm4025_assessment-BeccaPirie
+  137  cd client
+  138  npm install
+  139  npm start
+  140  history
+  141  history > client.txt
+  142  cd rebecca
+  143  ccm4025_assessment-Becca-Pirie
+  144  cd cm4025_assessment-BeccaPirie
+  145  mkdir database
+  146  cd database
+  147  mongodb --dbpath .
+  148  mongod --dbpath .
+  149  cd rebecca
+  150  cd cm4025_assessment-BeccaPirie
+  151  mkdir database
+  152  cd database
+  153  mongod --dbpath .
+  154  history > database.txt
