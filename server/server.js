@@ -7,10 +7,12 @@ import authRoute from './routes/auth.js';
 import userRoute from './routes/user.js';
 import quotesRoute from './routes/quotes.js';
 import paygradesRoute from './routes/paygrades.js';
+import dotenv from 'dotenv';
 
 const app = express();
+dotenv.config()
 const PORT = config.port
-const MONGODB_URI = config.mongoUri
+// const MONGODB_URI = config.mongoUri
 
 app.use(cors())
 app.use(bodyParser.json())
@@ -18,7 +20,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 // mongoose.connect(MONGODB_URI)
 mongoose.set("strictQuery", false)
-mongoose.connect(MONGODB_URI,
+mongoose.connect(process.env.MONGO_URL,
     {useNewUrlParser: true, useUnifiedTopology: true})
 
 app.use('/api/auth', authRoute)
