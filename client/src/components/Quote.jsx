@@ -41,7 +41,7 @@ export default function Quote({total, resources, displayAlert}) {
             }
         }
         fetchQuote()
-    }, [user._id, quoteId])
+    }, [user, quoteId])
 
     useEffect(() => {
         const fetchMainQuotes = async() => {
@@ -51,7 +51,7 @@ export default function Quote({total, resources, displayAlert}) {
             }
         }
         fetchMainQuotes()
-    }, [user._id])
+    }, [user])
 
     // ***** HANDLE SAVE BUTTON CLICK *****
     const saveQuoteClick = () => {
@@ -76,7 +76,7 @@ export default function Quote({total, resources, displayAlert}) {
             setLoginDialog(false)
             setShowDialog(true)
         } catch (err) {
-            console.error(err.response.data)
+            console.error("err.response.data")
             setError(true)
         }
     }
@@ -188,12 +188,14 @@ export default function Quote({total, resources, displayAlert}) {
             <Dialog open={showDialog} onClose={() => setShowDialog(false)}>              
                 <DialogTitle>Save</DialogTitle>
                 <DialogContent>
-                    <DialogContentText>
-                        Pick a quote to save as subtask, 
-                        or select new quote
-                    </DialogContentText>
 
-                    <FormControl style={{minWidth: 120}}>
+                    {!quoteId && <>
+                        <DialogContentText>
+                            Pick a quote to save as subtask, 
+                            or select new quote
+                        </DialogContentText>
+
+                        <FormControl style={{minWidth: 120}}>
                             <InputLabel id="quote-label">Quote</InputLabel>
                             <Select
                                 labelId="quote-label"
@@ -208,6 +210,7 @@ export default function Quote({total, resources, displayAlert}) {
                                 })}
                             </Select>
                         </FormControl>
+                    </>}
 
                     <DialogContentText>
                         Please enter a name for this quote

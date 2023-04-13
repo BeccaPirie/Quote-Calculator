@@ -15,23 +15,19 @@ export default function Quotes() {
 
     // TODO *** COMBINE QUOTES ***
     const combineQuotes = () => {
-        console.log("combine button click")
+        console.log("Feature not yet implemented")
     }
 
     // *** FETCH QUOTES TO DISPLAY IN MAIN LIST ***
     useEffect(() => {
         const fetchMainTasks = async() => {
-            if(quotes.length > 0) {
+            if(quotes) {
                 const filter = quotes.filter(quote => quote.mainTaskId === '')
                 setMainTasks(filter)
             }
         }
         fetchMainTasks()
     }, [quotes, user._id])
-
-    useEffect(() => {
-        console.log(quotes)
-    }, [quotes])
 
     return(
         <>

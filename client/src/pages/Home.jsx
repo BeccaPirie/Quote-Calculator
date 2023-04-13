@@ -66,7 +66,7 @@ export default function Home() {
     // *** RESOURCE FORM SUBMIT ***
     const onSubmit = (e) => {
         e.preventDefault()
-        // TODO form validation
+        //  form validation
         if(newResource.type === resourceTypes[1]) {
             if (newResource.workers < 1) {
                 displayAlert('Please add at least one worker')
@@ -169,7 +169,7 @@ export default function Home() {
                     }
                 </ButtonGroup>
 
-                <ButtonStyled onClick={() =>clearQuote()}>Clear All</ButtonStyled>
+                <ButtonStyled className="clear-btn" onClick={() =>clearQuote()}>Clear All</ButtonStyled>
 
                 {showBudget &&
                 <Quote

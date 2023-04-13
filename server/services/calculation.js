@@ -8,7 +8,7 @@ export const calculateQuote = async(obj) => {
     // calculate the fudge factor
     let ff = 1;
     if(obj.fudgeFactor) {
-        ff = Math.floor(Math.random() * (15-5) + 5) / 100
+        ff = Math.floor(Math.random() * (15-5) + 5) / 10
     }
 
     // fetch paygrade

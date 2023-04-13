@@ -21,6 +21,13 @@ h3 {
     }
 }
 
+.clear-btn {
+    display: block;
+    margin-top: 15px;
+    margin-left: 10%;
+    background-color: #f06060;
+}
+
 .info {
     width: 95%;
     margin: auto;

@@ -24,7 +24,7 @@ export default function QuoteItem({quote, checkOnChange, subtask, show, setShow}
     // ***** DELETE QUOTE *****
     const deleteQuote = async(quote) => {
         try {
-            const res = await axios.delete(`http://localhost:8000/api/quotes/delete/${user._id}/${quote._id}`, {
+            await axios.delete(`http://localhost:8000/api/quotes/delete/${user._id}/${quote._id}`, {
                 headers: {authorization:'Bearer ' + user.token}
             })
             dispatch({type: "DELETE_QUOTE", payload: quote._id})

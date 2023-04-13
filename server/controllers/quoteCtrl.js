@@ -34,13 +34,12 @@ const getQuote = async(req, res) => {
 // ***** CALCULATE QUOTE *****
 const calcQuote = async(req, res) => {
     try {
-        // TODO server validation
-        // if(!req.body.fudgeFactor) {
-        //     const user = await User.findById(req.params.id)
-        //     if(!user.isAdmin) {
-        //         return res.status(404).json("Don't have necessary permissions")
-        //     }
-        // }
+        // validation
+        if(!req.body.fudgeFactor) {
+            if(!req.params.id) return res.status(404).json("Don't have necessary permissions")
+            const user = await User.findById(req.params.id)
+            if(!user.isAdmin) return res.status(404).json("Don't have necessary permissions")
+        }
         const total = await calculateQuote(req.body)
         res.json(total)
     } catch (err) {
@@ -115,7 +114,6 @@ const updateQuote = async(req, res) => {
 }
 
 // ***** UPDATE SUBTASK *****
-// TODO HANDLE WHEN MAIN QUOTE CHANGES, REMOVE FROM TOTAL
 const updateSubtask = async(req, res) => {
     try {
         const user = await User.findById(req.params.id)
@@ -171,7 +169,6 @@ const deleteQuote = async(req, res) => {
 
         // delete subtasks
         if(quote.mainTaskId === '') {
-            
             await Quotes.deleteMany({mainTaskId: quote._id})
         }
 
@@ -204,6 +201,8 @@ const combineQuotes = async(req, res) => {
                 $in: req.body
             }
         })
+
+        // ... to complete
 
         res.json("Quotes combined")
     } catch (err) {
