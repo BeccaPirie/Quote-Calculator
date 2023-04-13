@@ -19,7 +19,7 @@ function App() {
     const fetchUsersQuotes = async() => {
       if(user) {
         try {
-            const res = await axios.get(`http://localhost:8000/api/quotes/user-quotes/${user._id}`, {
+            const res = await axios.get(`/quotes/user-quotes/${user._id}`, {
               headers: {authorization:'Bearer ' + user.token}
           })
             dispatch({type:"FETCH_QUOTES", payload: res.data})
