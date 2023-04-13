@@ -34,7 +34,7 @@ export default function Profile() {
         }
 
         try {
-            await axios.put(`/user/update-user/${user._id}`, updatedUser,{
+            await axios.put(`https://quote-calculator-api.onrender.com/api/user/update-user/${user._id}`, updatedUser,{
                 headers: {authorization:'Bearer ' + user.token}
             })
             dispatch({type:"UPDATE_USER", payload: updatedUser})
@@ -65,7 +65,7 @@ export default function Profile() {
         }
 
         try {
-            const res = await axios.put(`/user/update-password/${user._id}`, passwords, {
+            const res = await axios.put(`https://quote-calculator-api.onrender.com/api/user/update-password/${user._id}`, passwords, {
                 headers: {authorization:'Bearer ' + user.token}
             })
             dispatch({type:"UPDATE_PASSWORD", payload: res.data})
@@ -76,7 +76,7 @@ export default function Profile() {
 
     const deleteAccount = async() => {
         try {
-            await axios.delete(`/user/delete-user/${user._id}`, {
+            await axios.delete(`https://quote-calculator-api.onrender.com/api/user/delete-user/${user._id}`, {
                 headers: {authorization:'Bearer ' + user.token}
             })
             dispatch({type:"DELETE_USER"})

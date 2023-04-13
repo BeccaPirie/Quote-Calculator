@@ -33,7 +33,7 @@ export default function Quote({total, resources, displayAlert}) {
     useEffect(() => {
         const fetchQuote = async() => {
             if(quoteId) {
-                const res = await axios.get(`/quotes/quote/${user._id}/${quoteId}`, {
+                const res = await axios.get(`https://quote-calculator-api.onrender.com/api/quotes/quote/${user._id}/${quoteId}`, {
                     headers: {authorization:'Bearer ' + user.token}
                 })
                 setQuoteName(res.data.name)

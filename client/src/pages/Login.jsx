@@ -21,7 +21,7 @@ export default function Login() {
         }
 
         try {
-            const res = await axios.post("/auth/login", credentials)
+            const res = await axios.post("https://quote-calculator-api.onrender.com/api/auth/login", credentials)
             dispatch({ type: "LOGIN_SUCCESS", payload: res.data})
             setAlertText('')
             setError(false)

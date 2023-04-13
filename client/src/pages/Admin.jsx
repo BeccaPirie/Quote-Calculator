@@ -19,7 +19,7 @@ export default function Admin() {
         const fetchPaygrades = async() => {
             try {
                 if(!user.isAdmin) throw new Error("Not authorised")
-                const res = await axios.get('http://localhost:8000/api/paygrades/')
+                const res = await axios.get('https://quote-calculator-api.onrender.com/api/api/paygrades/')
                 setJunior(res.data.find(data => data.type === "Junior"))
                 setStandard(res.data.find(data => data.type === "Standard"))
                 setSenior(res.data.find(data => data.type === "Senior"))
@@ -33,7 +33,7 @@ export default function Admin() {
     // *** UPDATE PAYGRADE ***
     const updatePaygrades = async(paygrade) => {
         try {
-            await axios.put(`/paygrades/update/${user._id}`, paygrade, {
+            await axios.put(`https://quote-calculator-api.onrender.com/api/paygrades/update/${user._id}`, paygrade, {
                 headers: {authorization:'Bearer ' + user.token}
             })
             displayAlert()

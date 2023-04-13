@@ -43,7 +43,7 @@ export default function Register() {
         }
 
         try {
-            await axios.post('/auth/signup', user)
+            await axios.post('https://quote-calculator-api.onrender.com/api/auth/signup', user)
             setAlertText('')
             navigate('/login')
         } catch (err) {

@@ -14,7 +14,7 @@ export default function HumanResource({resource, setResource}) {
     // fetch paygrades
     useEffect(() => {
         const fetchPaygrades = async() => {
-            const res = await axios.get('/paygrades/')
+            const res = await axios.get('https://quote-calculator-api.onrender.com/api/paygrades/')
             setPaygrades(res.data)
         }
         fetchPaygrades()
